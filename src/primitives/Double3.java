@@ -63,7 +63,6 @@ class Double3 {
 	Double3 add(Double3 rhs) {
 		return new Double3(d1 + rhs.d1, d2 + rhs.d2, d3 + rhs.d3);
 	}
-
 	/**
 	 * Subtract two floating point triads into a new triad where each couple of
 	 * numbers is subtracted
