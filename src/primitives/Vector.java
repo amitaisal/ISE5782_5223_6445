@@ -4,7 +4,7 @@ public class Vector extends Point {
     public Vector(double x, double y, double z) {
         super(x,y,z);
     }
-
+    public Vector(Double3 xyz) { super(xyz.d1,xyz.d2,xyz.d3);}
     @Override
     public boolean equals(Object o) {
         return super.equals(o);

@@ -1,27 +1,31 @@
 package primitives;
 
+import java.util.Objects;
+
 public class Point {
-    protected double x;
-    protected double y;
-    protected double z;
+    protected Double3 xyz;
 
     public Point(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        xyz = new Double3(x,y,z);
     }
 
-    public Point add(Vector vertex) {
-        return null;
+    public Point(Double3 xyz)
+    {
+        this.xyz = xyz;
+    }
+    public Point add(Vector vector) {
+        return new(vector.xyz.add(this.xyz));
     }
 
-    public Vector subtract(Point vertex) {
-        return null;
+    public Vector subtract(Point point) {
+        return new Vector(point.xyz.subtract(this.xyz));
     }
 
     @Override
     public String toString() {
-        return "Point{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+        return "Point{" +
+                "xyz=" + xyz +
+                '}';
     }
 
     @Override
@@ -29,6 +33,6 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return Double.compare(point.x, x) == 0 && Double.compare(point.y, y) == 0 && Double.compare(point.z, z) == 0;
+        return Objects.equals(xyz, point.xyz);
     }
 }
