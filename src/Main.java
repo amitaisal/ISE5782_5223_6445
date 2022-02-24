@@ -1,6 +1,11 @@
 import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
+/**
+ * Written by:
+ * Nerya [lastname] [id] [email]
+ * Amitai Salomon 316336445 amitaisal@gmail.com
+ */
 
 /**
  * Test program for the 1st stage

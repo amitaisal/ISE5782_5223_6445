@@ -4,26 +4,40 @@ import java.util.Objects;
 
 public class Point {
 
-    final protected Double3 xyz;
+    protected Double3 xyz;
 
     public Point(double x, double y, double z) {
-        xyz = new Double3(x,y,z);
+        this.xyz = new Double3(x,y,z);
     }
-    public Point(Double3 xyz)
-    {
+
+    public Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
     public Point add(Vector vector) {
-        return  new Point(this.xyz.add(vector.xyz));
+        return new Point(this.xyz.add(vector.xyz));
     }
+
     public Vector subtract(Point point) {
         return new Vector(this.xyz.subtract(point.xyz));
     }
+
+    /**
+     * Calculates the distance squared between two points.
+     * @param point a given point
+     * @return the distance squared
+     */
     public double distanceSquared(Point point){
-        return (point.xyz.d1*point.xyz.d1+point.xyz.d2*point.xyz.d1+point.xyz.d3*point.xyz.d1)
-                -(this.xyz.d1*this.xyz.d1+this.xyz.d2*this.xyz.d2+this.xyz.d3*this.xyz.d3);
+        return (point.xyz.d1 - this.xyz.d1) * (point.xyz.d1 - this.xyz.d1) +
+                (point.xyz.d2 - this.xyz.d2) * (point.xyz.d2 - this.xyz.d2) +
+                (point.xyz.d3 - this.xyz.d3) * (point.xyz.d3 - this.xyz.d3);
     }
+
+    /**
+     * Calculates the distance between two points.
+     * @param point a given point
+     * @return the distance between current point and a given point
+     */
     public double distance (Point point){
         return Math.sqrt(this.distanceSquared(point));
     }
