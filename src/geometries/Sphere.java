@@ -3,6 +3,8 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Sphere implements Geometry{
 
     private final Point center;
@@ -32,5 +34,13 @@ public class Sphere implements Geometry{
                 "center=" + center +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sphere sphere = (Sphere) o;
+        return Double.compare(sphere.radius, radius) == 0 && Objects.equals(center, sphere.center);
     }
 }

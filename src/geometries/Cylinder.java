@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Cylinder extends Tube{
     private final double height;
 
@@ -24,5 +26,14 @@ public class Cylinder extends Tube{
     @Override
     public String toString() {
         return super.toString() + ", height=" + height;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Cylinder cylinder = (Cylinder) o;
+        return Double.compare(cylinder.height, height) == 0;
     }
 }

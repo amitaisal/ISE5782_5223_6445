@@ -2,6 +2,8 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Plane implements Geometry{
     private final Point p0;
     private final Vector normal;
@@ -29,5 +31,21 @@ public class Plane implements Geometry{
     @Override
     public Vector getNormal(Point point) {
         return normal;
+    }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "p0=" + p0 +
+                ", normal=" + normal +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plane plane = (Plane) o;
+        return Objects.equals(p0, plane.p0) && Objects.equals(normal, plane.normal);
     }
 }

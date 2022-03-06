@@ -23,18 +23,18 @@ public class Point {
     }
 
     /**
-     * Calculates the distance squared between two points.
+     * calculates the distance squared between two points.
      * @param point a given point
      * @return the distance squared
      */
     public double distanceSquared(Point point){
-        return (point.xyz.d1 - this.xyz.d1) * (point.xyz.d1 - this.xyz.d1) +
+        return  (point.xyz.d1 - this.xyz.d1) * (point.xyz.d1 - this.xyz.d1) +
                 (point.xyz.d2 - this.xyz.d2) * (point.xyz.d2 - this.xyz.d2) +
                 (point.xyz.d3 - this.xyz.d3) * (point.xyz.d3 - this.xyz.d3);
     }
 
     /**
-     * Calculates the distance between two points.
+     * calculates the distance between two points.
      * @param point a given point
      * @return the distance between current point and a given point
      */

@@ -14,6 +14,7 @@ public class Vector extends Point {
             throw new IllegalArgumentException("Can't create vector 0");
     }
 
+
     /**
      * adding two vectors together
      * @param vector a given vector
@@ -24,18 +25,18 @@ public class Vector extends Point {
     }
 
     /**
-     *
+     * scales the vector
      * @param scalar
-     * @return
+     * @return the new vector after scaling it
      */
     public Vector scale(double scalar) {
         return new Vector(this.xyz.scale(scalar));
     }
 
     /**
-     *
+     * calculates the cross product between two vectors
      * @param vector
-     * @return
+     * @return the normal vector
      */
     public Vector crossProduct(Vector vector) {
         return new Vector(
@@ -45,9 +46,9 @@ public class Vector extends Point {
     }
 
     /**
-     *
+     * calculates the dot product between two vectors
      * @param vector
-     * @return
+     * @return scalar
      */
     public double dotProduct(Vector vector) {
         return (this.xyz.d1 * vector.xyz.d1 +
@@ -55,28 +56,16 @@ public class Vector extends Point {
                 this.xyz.d3 * vector.xyz.d3);
     }
 
-    /**
-     *
-     * @return
-     */
     public double lengthSquared() {
         return (this.xyz.d1 * this.xyz.d1 +
                 this.xyz.d2 * this.xyz.d2 +
                 this.xyz.d3 * this.xyz.d3);
     }
 
-    /**
-     *
-     * @return
-     */
     public double length() {
         return Math.sqrt(lengthSquared());
     }
 
-    /**
-     *
-     * @return
-     */
     public Vector normalize() {
         return new Vector(this.xyz.reduce(length()));
     }

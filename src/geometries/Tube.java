@@ -4,10 +4,12 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Tube implements Geometry{
 
-    protected Ray axisRay;
-    protected double radius;
+    protected final Ray axisRay;
+    protected final double radius;
 
     public Tube(Ray axisRay, double radius) {
         this.axisRay = axisRay;
@@ -32,5 +34,13 @@ public class Tube implements Geometry{
         return "axisRay=" + axisRay +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tube tube = (Tube) o;
+        return Double.compare(tube.radius, radius) == 0 && Objects.equals(axisRay, tube.axisRay);
     }
 }
