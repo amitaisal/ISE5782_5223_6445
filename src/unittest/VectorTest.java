@@ -15,9 +15,8 @@ class VectorTest {
 
         // =============== Boundary Values Tests ==================
         try { // test zero vector
-            fail("ERROR: zero vector does not throw an exception using 3 doubles constructor");
             new Vector(0, 0, 0);
-
+            fail("ERROR: zero vector does not throw an exception using 3 doubles constructor");
         } catch (Exception e) {
         }
 
@@ -30,11 +29,13 @@ class VectorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void add() {
+    void testAdd() {
+        assertEquals(new Vector(2, 3, 4),new Vector(1, 2, 1).add(new Vector(1, 1, 3)),"ERROR: Point + Vector does not work correctly");
     }
 
     @org.junit.jupiter.api.Test
-    void scale() {
+    void testScale() {
+        assertEquals(new Vector(6, 9, -3),new Vector(2, 3, -1).scale(3),"ERROR: Point + Vector does not work correctly");
     }
 
     @org.junit.jupiter.api.Test
@@ -42,7 +43,7 @@ class VectorTest {
         Vector v1 = new Vector(1, 2, 3);
 
         // ============ Equivalence Partitions Tests ==============
-        Vector v2 = new Vector(0, 3, -2);
+        Vector v2 = new Vector(2, 3, 4);
         Vector vr = v1.crossProduct(v2);
 
         // TC01: Test that length of cross-product is proper (orthogonal vectors taken
@@ -56,8 +57,8 @@ class VectorTest {
         // =============== Boundary Values Tests ==================
         // TC11: test zero vector from cross-productof co-lined vectors
         Vector v3 = new Vector(-2, -4, -6);
-        //assertThrows("crossProduct() for parallel vectors does not throw an exception",
-        //        IllegalArgumentException.class, () -> v1.crossProduct(v3));
+        assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v3),
+                "crossProduct() for parallel vectors does not throw an exception");
 
     }
 
@@ -84,33 +85,5 @@ class VectorTest {
 
     @org.junit.jupiter.api.Test
     void normalize() {
-    }
-
-    @Test
-    void testAdd() {
-    }
-
-    @Test
-    void testScale() {
-    }
-
-    @Test
-    void testCrossProduct() {
-    }
-
-    @Test
-    void testDotProduct() {
-    }
-
-    @Test
-    void testLengthSquared() {
-    }
-
-    @Test
-    void testLength() {
-    }
-
-    @Test
-    void testNormalize() {
     }
 }

@@ -3,7 +3,7 @@ import static java.lang.System.out;
 import static primitives.Util.*;
 /**
  * Written by:
- * Nerya [lastname] [id] [email]
+ * Nerya Barakassa 208915223
  * Amitai Salomon 316336445 amitaisal@gmail.com
  */
 
