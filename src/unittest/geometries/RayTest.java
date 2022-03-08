@@ -1,20 +1,16 @@
-package unittest;
+package unittest.geometries;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TubeTest {
+class RayTest {
 
     @Test
-    void getAxisRay() {
+    void getP0() {
     }
 
     @Test
-    void getRadius() {
-    }
-
-    @Test
-    void getNormal() {
+    void getDir() {
     }
 }
