@@ -11,4 +11,33 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class PointTest {
 
+
+    @Test
+    /**
+     * Test method for {@link Point.Add}
+     */
+    void testAdd() {
+
+    }
+
+    @Test
+    /**
+     * Test method for {@link Point.Subtract}
+     */
+    void testSubtract() {
+    }
+
+    @Test
+    /**
+     * Test method for {@link Point.DistanceSquared}
+     */
+    void testDistanceSquared() {
+    }
+
+    @Test
+    /**
+     * Test method for {@link Point.Distance}
+     */
+    void testDistance() {
+    }
 }
