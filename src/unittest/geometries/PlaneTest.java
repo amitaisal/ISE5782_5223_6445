@@ -1,16 +1,20 @@
-package unittest;
+package unittest.geometries;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RayTest {
+class PlaneTest {
 
     @Test
     void getP0() {
     }
 
     @Test
-    void getDir() {
+    void getNormal() {
+    }
+
+    @Test
+    void testGetNormal() {
     }
 }

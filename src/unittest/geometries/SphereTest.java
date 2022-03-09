@@ -1,13 +1,17 @@
-package unittest;
+package unittest.geometries;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CylinderTest {
+class SphereTest {
 
     @Test
-    void getHeight() {
+    void getCenter() {
+    }
+
+    @Test
+    void getRadius() {
     }
 
     @Test

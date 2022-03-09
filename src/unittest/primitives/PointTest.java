@@ -1,4 +1,4 @@
-package unittest;
+package unittest.primitives;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PointTest {
 
     /**
-     * Test method for {@link primitives.Point#add(Vector)}
+     * Test method for {@link primitives.Point#add(primitives.Vector)}
      */
     @Test
     void testAdd() {
@@ -21,14 +21,14 @@ public class PointTest {
     }
 
     @Test
-    void subtract() {
+    void testSubtract() {
     }
 
     @Test
-    void distanceSquared() {
+    void testDistanceSquared() {
     }
 
     @Test
-    void distance() {
+    void testDistance() {
     }
 }

@@ -51,15 +51,13 @@ public class Vector extends Point {
      * @return scalar
      */
     public double dotProduct(Vector vector) {
-        return (this.xyz.d1 * vector.xyz.d1 +
-                this.xyz.d2 * vector.xyz.d2 +
-                this.xyz.d3 * vector.xyz.d3);
+        Double3 xyz = this.xyz.product(vector.xyz);
+        return xyz.d1 + xyz.d2 + xyz.d3;
     }
 
     public double lengthSquared() {
-        return (this.xyz.d1 * this.xyz.d1 +
-                this.xyz.d2 * this.xyz.d2 +
-                this.xyz.d3 * this.xyz.d3);
+        Double3 xyz = this.xyz.product(this.xyz);
+        return xyz.d1 + xyz.d2 + xyz.d3;
     }
 
     public double length() {
