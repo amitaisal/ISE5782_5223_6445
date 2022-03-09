@@ -112,13 +112,14 @@ class VectorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void normalize() {
+    void testNormalize() {
         // test vector normalization vs vector length and cross-product
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalize();
 
         // ============ Equivalence Partitions Tests ==============
-        assertTrue(isZero(u.length() - 1),
+        // TC01: Test that the lengthSquared() of vector is correct.
+        assertEquals(1d, u.length(),
                 "ERROR: the normalized vector is not a unit vector");
         assertThrows(IllegalArgumentException.class, () -> v.crossProduct(u),
                 "ERROR: the normalized vector is not parallel to the original one");
