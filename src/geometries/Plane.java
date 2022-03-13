@@ -28,8 +28,20 @@ public class Plane implements Geometry{
         return normal;
     }
 
+    /**
+     * calculates the normal of a plane
+     * @param point on the plane
+     * @return the normal
+     */
     @Override
     public Vector getNormal(Point point) {
+        if(!point.equals(this.p0))
+        {
+            Vector vector = point.subtract(this.p0);
+            double angle = vector.dotProduct(this.normal);
+            if(angle != 0)
+                throw new IllegalArgumentException("The point is not on the plain");
+        }
         return normal;
     }
 

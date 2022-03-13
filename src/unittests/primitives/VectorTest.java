@@ -1,11 +1,9 @@
-package unittest.primitives;
+package unittests.primitives;
 
-import org.junit.jupiter.api.Test;
 import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 
-import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static primitives.Util.isZero;
@@ -123,14 +121,14 @@ class VectorTest {
         // TC01: Test that the lengthSquared() of vector is correct.
         assertEquals(1d, u.length(),
                 "ERROR: the normalized vector is not a unit vector");
+
         // TC02: Test that the exception is thrown when doing a cross product
         // between a vector and it's normalized vector.
-        // If test fails, the normalized func is incorrect.
         assertThrows(IllegalArgumentException.class, () -> v.crossProduct(u),
                 "ERROR: the normalized vector is not parallel to the original one");
+
         // TC02: Test that the exception is thrown when doing a dot product
         // between a vector and it's normalized vector.
-        // If test fails, the normalized func is incorrect.
         assertFalse(v.dotProduct(u) < 0,
                 "ERROR: the normalized vector is opposite to the original one");
     }

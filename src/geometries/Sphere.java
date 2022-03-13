@@ -23,9 +23,17 @@ public class Sphere implements Geometry{
         return radius;
     }
 
+    /**
+     * calculates the normal of a sphere on a given point
+     * @param point on the surface of the sphere
+     * @return the normal at the given point
+     */
     @Override
     public Vector getNormal(Point point) {
-       return (point.subtract(center)).normalize();
+        Vector normal = point.subtract(this.center);
+        if(normal.length() != this.radius)
+            throw new IllegalArgumentException("The point is not on the surface of the sphere");
+        return normal.normalize();
     }
 
     @Override

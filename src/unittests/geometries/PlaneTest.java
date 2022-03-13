@@ -1,7 +1,6 @@
-package unittest.geometries;
+package unittests.geometries;
 
 import geometries.Plane;
-import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Vector;
@@ -22,12 +21,15 @@ class PlaneTest {
         assertThrows(IllegalArgumentException.class,()->
                 new Plane(new Point(1, 0, 0),
                 new Point(1, 0, 0),
-                new Point(1, 1, 0)),"");
+                new Point(1, 1, 0)),
+                "ERROR: incorrect normal");
+
         //TC02:The point are on the same line
         assertThrows(IllegalArgumentException.class,()->
                 new Plane(new Point(1, 0, 0),
                         new Point(2, 0, 0),
-                        new Point(3, 0, 0)),"");
+                        new Point(3, 0, 0)),
+                "ERROR: incorrect normal");
     }
 
     @Test
@@ -42,6 +44,14 @@ class PlaneTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here
         assertEquals(new Vector(sqrt, sqrt, sqrt), pl.getNormal(new Point(0, 0, 1)),
-                "error incorrect normal");
+                "ERROR: incorrect normal");
+
+        // TC02: Test to check that the normal is of length 1
+        assertEquals(1d, pl.getNormal(new Point(0, 0, 1)).length(),
+                "ERROR: the length of the normal isn't normalized");
+
+        // TC03: check that a given point throws an exception when it's not on the plane
+        assertThrows(IllegalArgumentException.class, ()-> pl.getNormal(new Point(0,0,0)),
+                "ERROR: point not on the plain doesn't throw an exception");
     }
 }

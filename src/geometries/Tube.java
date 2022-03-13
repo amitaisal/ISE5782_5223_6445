@@ -24,12 +24,21 @@ public class Tube implements Geometry{
         return radius;
     }
 
+    /**
+     * calculates the normal of a point on the surface of a tube
+     * @param point on the surface of the tube
+     * @return the normal at the given point
+     */
     @Override
     public Vector getNormal(Point point) {
        Vector v = point.subtract(axisRay.getP0());
-       double t = v.dotProduct(axisRay.getDir());
-       Point o = axisRay.getP0().add(axisRay.getDir().scale(t));
-       return point.subtract(o).normalize();
+       double scalar = v.dotProduct(axisRay.getDir());
+       Point point_o;
+       if(scalar == 0)
+           point_o = this.axisRay.getP0();
+       else
+           point_o = axisRay.getP0().add(axisRay.getDir().scale(scalar));
+       return point.subtract(point_o).normalize();
     }
 
     @Override
