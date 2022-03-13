@@ -15,6 +15,7 @@ class CylinderTest {
      * Test method for {@link Cylinder.GetNormal}
      */
     void testGetNormal() {
+        // ============ Equivalence Partitions Tests ==============
         Point point = new Point(0,0,0);
         Vector vector = new Vector(1,0,0);
         Ray ray = new Ray(point, vector);
@@ -36,5 +37,15 @@ class CylinderTest {
 
         assertEquals(new Vector(0,0,1), cy2.getNormal(new Point(0,0.5,0)),
                 "");
+
+        // =============== Boundary Values Tests ==================
+
+        assertEquals(new Vector(-1,0,0), cy1.getNormal(new Point(0,0,0)),"");
+
+        assertEquals(new Vector(1,0,0), cy1.getNormal(new Point(1,0,0)),"");
+
+
+
+
     }
 }

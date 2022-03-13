@@ -20,8 +20,13 @@ public class Cylinder extends Tube{
 
     @Override
     public Vector getNormal(Point point) {
-        Vector v1 = this.axisRay.getDir();
-        Vector v2 = this.axisRay.getDir().scale(height);
+
+        if (point.equals(this.axisRay.getP0()))
+            return this.axisRay.getDir().scale(-1);
+        Point p1=(this.axisRay.getP0().add(this.axisRay.getDir().scale(this.height)));
+        if (point.equals(p1))
+            return this.axisRay.getDir();
+
         Vector v3 = point.subtract(this.axisRay.getP0());
         double t = this.axisRay.getDir().dotProduct(v3);
         double distance = 0;
