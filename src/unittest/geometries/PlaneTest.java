@@ -16,19 +16,20 @@ class PlaneTest {
      */
     void testPlaneConstructor()
     {
+        // =============== Boundary Values Tests ==================
+
+        //TC01:The first and second points merge
         assertThrows(IllegalArgumentException.class,()->
                 new Plane(new Point(1, 0, 0),
                 new Point(1, 0, 0),
                 new Point(1, 1, 0)),"");
-
+        //TC02:The point are on the same line
         assertThrows(IllegalArgumentException.class,()->
                 new Plane(new Point(1, 0, 0),
                         new Point(2, 0, 0),
                         new Point(3, 0, 0)),"");
     }
 
-
-    // ============ Equivalence Partitions Tests ==============
     @Test
     /**
      * Test method for {@link Plane.GetNormal}
@@ -37,6 +38,9 @@ class PlaneTest {
 
         Plane pl = new Plane(new Point(1, 0, 0), new Point(0, 1, 0), new Point(0, 0, 1));
         double sqrt = Math.sqrt(1.0/ 3);
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         assertEquals(new Vector(sqrt, sqrt, sqrt), pl.getNormal(new Point(0, 0, 1)),
                 "error incorrect normal");
     }

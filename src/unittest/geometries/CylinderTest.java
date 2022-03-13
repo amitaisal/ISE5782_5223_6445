@@ -16,36 +16,32 @@ class CylinderTest {
      */
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
+
         Point point = new Point(0,0,0);
         Vector vector = new Vector(1,0,0);
         Ray ray = new Ray(point, vector);
         Cylinder cy1 = new Cylinder(1d, ray, 2d);
 
+        // TC01: Simple single test -when point is on the base of the cylinder
         assertEquals(new Vector(1,0,0), cy1.getNormal(new Point(0,1,0)),
-                "");
+                "Bad normal to cylinder");
 
         point = new Point(0,0,0);
         vector = new Vector(0,0,1);
         ray = new Ray(point, vector);
         Cylinder cy2 = new Cylinder(1d, ray, 1d);
-
+        // TC02: Simple single test -when point is on the top of the cylinder
         assertEquals(new Vector(0,0,1), cy2.getNormal(new Point(0,0.5,1)),
-                "");
-
+                "Bad normal to cylinder");
+        // TC03: Simple single test -when point is on the surface of the cylinder
         assertEquals(new Vector(0,1,0), cy2.getNormal(new Point(0,0.5,0.5)),
-                "");
+                "Bad normal to cylinder");
 
-        assertEquals(new Vector(0,0,1), cy2.getNormal(new Point(0,0.5,0)),
-                "");
 
         // =============== Boundary Values Tests ==================
-
-        assertEquals(new Vector(-1,0,0), cy1.getNormal(new Point(0,0,0)),"");
-
-        assertEquals(new Vector(1,0,0), cy1.getNormal(new Point(1,0,0)),"");
-
-
-
-
+        // TC01:Single boundary test-when point is on the center base of the cylinder
+        assertEquals(new Vector(-1,0,0), cy1.getNormal(new Point(0,0,0)),"Bad normal to cylinder");
+        // TC02:Single boundary test-when point is on the center top of the cylinder
+        assertEquals(new Vector(1,0,0), cy1.getNormal(new Point(1,0,0)),"Bad normal to cylinder");
     }
 }

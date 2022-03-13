@@ -15,6 +15,8 @@ class SphereTest {
      * Test method for {@link Sphere.GetNormal}
      */
     void testGetNormal() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Sphere sp= new Sphere(new Point(0,0,0),1);
         assertEquals(new Vector(0,0,1),sp.getNormal(new Point(0,0,1)), "error incorrect normal");
     }
