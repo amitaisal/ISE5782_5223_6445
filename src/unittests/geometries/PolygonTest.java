@@ -1,8 +1,10 @@
 package unittests.geometries;
 
+import geometries.Plane;
 import geometries.Polygon;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -73,5 +75,39 @@ class PolygonTest {
         double sqrt3 = Math.sqrt(1d / 3);
         assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point(0, 0, 1)),
                 "Bad normal to triangle");
+    }
+
+    @Test
+    /**
+     * Test method for {@link geometries.Polygon#findIntersections(primitives.Ray)}
+     */
+    void testFindIntersections() {
+        Ray ray;
+        Plane plane = new Plane(new Point(2,0,0),
+                new Point(2,1,0),
+                new Point(2,1,1));
+
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Ray's line is towards the plane-1 point
+        ray = new Ray(new Point(1,0,0), new Vector(1,0,0));
+        assertEquals(1, plane.findIntersections(ray),
+                "ERROR: findIntersections for plane doesn't work properly");
+
+        // TC02: Ray's line is parallel to the plane-0 point
+        ray = new Ray(new Point(1,0,0), new Vector(0,1,0));
+        assertNull(plane.findIntersections(ray),
+                "ERROR: findIntersections for plane doesn't work properly");
+
+        // =============== Boundary Values Tests ==================
+        // TC11: Ray's start point is on the plane towards outside-0 point
+        ray = new Ray(new Point(2,0,1), new Vector(1,0,0));
+        assertNull(plane.findIntersections(ray),
+                "ERROR: findIntersections for plane doesn't work properly");
+
+        // TC12: Ray's start point is on the plane parallel to the plane-0 point
+        ray = new Ray(new Point(2,0,1), new Vector(0,1,0));
+        assertNull(plane.findIntersections(ray),
+                "ERROR: findIntersections for plane doesn't work properly");
     }
 }

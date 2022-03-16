@@ -29,8 +29,5 @@ public class Geometries implements  Intersectable {
     @Override
     public List<Point> findIntersections(Ray ray) {
         return null;
-        for (Intersectable geometry:geometries){
-
-        }
     }
 }
