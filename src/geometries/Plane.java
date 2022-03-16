@@ -22,7 +22,6 @@ public class Plane implements Geometry{
         this.p0 = p0;
         this.normal = normal.normalize();
     }
-    public List<Point> findIntersections(Ray ray){return null;}
 
     public Point getP0() {
         return p0;
@@ -47,6 +46,15 @@ public class Plane implements Geometry{
                 throw new IllegalArgumentException("The point is not on the plain");
         }
         return normal;
+    }
+
+    /**
+     *
+     * @param ray
+     * @return
+     */
+    public List<Point> findIntersections(Ray ray){
+        return null;
     }
 
     @Override

@@ -38,6 +38,16 @@ public class Sphere implements Geometry{
         return normal.normalize();
     }
 
+    /**
+     *
+     * @param ray
+     * @return
+     */
+    public List<Point> findIntersections(Ray ray){
+        return null;
+    }
+
+
     @Override
     public String toString() {
         return "Sphere{" +
@@ -53,6 +63,4 @@ public class Sphere implements Geometry{
         Sphere sphere = (Sphere) o;
         return Double.compare(sphere.radius, radius) == 0 && Objects.equals(center, sphere.center);
     }
-    public List<Point> findIntersections(Ray ray){return null;}
-
 }

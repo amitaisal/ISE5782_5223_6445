@@ -41,7 +41,15 @@ public class Tube implements Geometry{
            point_o = axisRay.getP0().add(axisRay.getDir().scale(scalar));
        return point.subtract(point_o).normalize();
     }
-    public List<Point> findIntersections(Ray ray){return null;}
+
+    /**
+     *
+     * @param ray
+     * @return
+     */
+    public List<Point> findIntersections(Ray ray){
+        return null;
+    }
 
 
     @Override

@@ -27,4 +27,5 @@ class TriangleTest {
         assertEquals(1d, tr.getNormal(new Point(0, 0, 1)).length(),
                 "ERROR: the length of the normal isn't normalized");
     }
+
 }
