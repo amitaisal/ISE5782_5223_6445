@@ -1,8 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Sphere implements Geometry{
@@ -51,4 +53,6 @@ public class Sphere implements Geometry{
         Sphere sphere = (Sphere) o;
         return Double.compare(sphere.radius, radius) == 0 && Objects.equals(center, sphere.center);
     }
+    public List<Point> findIntersections(Ray ray){return null;}
+
 }

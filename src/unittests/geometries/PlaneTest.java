@@ -3,7 +3,10 @@ package unittests.geometries;
 import geometries.Plane;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,5 +56,19 @@ class PlaneTest {
         // TC03: check that a given point throws an exception when it's not on the plane
         assertThrows(IllegalArgumentException.class, ()-> pl.getNormal(new Point(0,0,0)),
                 "ERROR: point not on the plain doesn't throw an exception");
+    }
+
+    @Test
+    /**
+     * Test method for {@link Plane.FindIntersections}
+     */
+    void testFindIntersections() {
+        Ray ray= new Ray();
+        Plane plane=new Plane(new Point(1,0,0),new Point(0,1,0),new Point(0,0,1));
+        plane.findIntersections();
+
+        assertNull(plane.findIntersections(ray),"");
+
+        assertEquals(List.of(new Point(1,1,1,),plane.findIntersections(ray),"");
     }
 }
