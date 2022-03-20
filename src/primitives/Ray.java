@@ -19,6 +19,11 @@ public class Ray {
         return dir;
     }
 
+    public Point getPoint(double t) { // Function calculate - P = P0 + v * t
+        Point p = p0.add(dir.scale(t));
+        return p;
+    }
+
     @Override
     public String toString() {
         return "Ray{" + "p0=" + p0 + ", dir=" + dir + '}';

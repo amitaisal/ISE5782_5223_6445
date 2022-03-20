@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import static primitives.Util.alignZero;
+
 public class Sphere implements Geometry{
 
     private final Point center;
@@ -45,7 +47,12 @@ public class Sphere implements Geometry{
      * @return
      */
     public List<Point> findIntersections(Ray ray){
-
+        LinkedList<Point> linkedList = new LinkedList<>();
+        if (this.center.equals(ray.getP0()))
+        {
+            linkedList.add((this.center));
+            return linkedList;
+        }
         Vector u= this.center.subtract(ray.getP0());
         double tm= u.dotProduct(ray.getDir());
         double d= Math.sqrt(u.lengthSquared()-tm*tm);
@@ -54,23 +61,20 @@ public class Sphere implements Geometry{
         double th= Math.sqrt(this.radius*this.radius-d*d);
         double t1= tm+th;
         double t2= tm-th;
-        LinkedList<Point> linkedList = new LinkedList<>();
-        if (t1>0)
+        if (alignZero(t1)>0)
         {
-            Point point = ray.getP0().add(ray.getDir().scale(t1));
+            Point point = ray.getPoint(t1);
             linkedList.add(point);
         }
-        if (t2>0)
+        if (alignZero(t2)>0)
         {
-            Point point = ray.getP0().add(ray.getDir().scale(t2));
+            Point point =  ray.getPoint(t2);
             linkedList.add(point);
         }
         if (linkedList.isEmpty())
-            return null;
+            return null; // In case there are no intersections points
         return linkedList;
     }
-
-
     @Override
     public String toString() {
         return "Sphere{" +

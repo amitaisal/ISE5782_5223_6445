@@ -59,19 +59,16 @@ public class Plane implements Geometry{
     public List<Point> findIntersections(Ray ray){
 
         double numerator, denominator;
-
         if(this.p0.equals(ray.getP0()))
             return null;
         numerator = this.normal.dotProduct(this.p0.subtract(ray.getP0()));
         denominator = this.normal.dotProduct(ray.getDir());
         if(isZero(denominator))
             return null;
-
-
         double t = alignZero(numerator/denominator);
         if (t > 0)
         {
-            Point point =  ray.getP0().add(ray.getDir().scale(t));
+            Point point = ray.getPoint(t);
             LinkedList<Point> linkedList = new LinkedList<>();
             linkedList.add(point);
             return linkedList;

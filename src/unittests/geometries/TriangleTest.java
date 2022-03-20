@@ -69,6 +69,5 @@ class TriangleTest {
         ray = new Ray(new Point(1,0,0), new Vector(3,3,0));
         result = triangle.findIntersections(ray);
         assertNull(result, "ERROR: findIntersections for plane doesn't work properly");
-
     }
 }
