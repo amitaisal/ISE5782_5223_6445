@@ -3,12 +3,14 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 import static primitives.Util.*;
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Plane class represents a plane using a point and a normal vector
+ */
 public class Plane implements Geometry{
 
     private final Point p0;
@@ -52,23 +54,27 @@ public class Plane implements Geometry{
     }
 
     /**
-     *
+     * finds all intersections with the plane
      * @param ray
-     * @return
+     * @return list of points of intersections
      */
     public List<Point> findIntersections(Ray ray){
-
         double numerator, denominator;
 
         if(this.p0.equals(ray.getP0()))
             return null;
+        // normal dot (Q - p0)
         numerator = this.normal.dotProduct(this.p0.subtract(ray.getP0()));
+        // normal dot dir of ray
         denominator = this.normal.dotProduct(ray.getDir());
+
         if(isZero(denominator))
             return null;
 
+        double t = alignZero(numerator / denominator);
 
-        double t = alignZero(numerator/denominator);
+        // if t is positive it means the dir is towards the plane
+        // and there is an intersection point
         if (t > 0)
         {
             Point point =  ray.getP0().add(ray.getDir().scale(t));
