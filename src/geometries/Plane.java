@@ -2,7 +2,10 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.*;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,6 +57,25 @@ public class Plane implements Geometry{
      * @return
      */
     public List<Point> findIntersections(Ray ray){
+
+        double numerator, denominator;
+
+        if(this.p0.equals(ray.getP0()))
+            return null;
+        numerator = this.normal.dotProduct(this.p0.subtract(ray.getP0()));
+        denominator = this.normal.dotProduct(ray.getDir());
+        if(isZero(denominator))
+            return null;
+
+
+        double t = alignZero(numerator/denominator);
+        if (t > 0)
+        {
+            Point point =  ray.getP0().add(ray.getDir().scale(t));
+            LinkedList<Point> linkedList = new LinkedList<>();
+            linkedList.add(point);
+            return linkedList;
+        }
         return null;
     }
 
