@@ -15,7 +15,7 @@ public class Triangle extends Polygon {
     // point p with respect to triangle (a, b, c)
     public List<Point> findIntersections(Ray ray){
         List<Point> result = plane.findIntersections(ray);
-        if (result.isEmpty())
+        if (result==null)
             return null;
         Vector v1 = vertices.get(0).subtract(ray.getP0());
         Vector v2 = vertices.get(1).subtract(ray.getP0());

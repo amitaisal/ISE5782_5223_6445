@@ -16,18 +16,27 @@ public class Geometries implements Intersectable {
     }
 
     public Geometries(Intersectable... geometries){
-        add(geometries);
+
+        this.geometries= List.of(geometries);
     }
 
     public void add(Intersectable... geometries){
-        for (Intersectable geometry:geometries){
-            this.geometries.add(geometry);
-
-        }
+        this.geometries.addAll(List.of(geometries));
     }
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        return null;
+        if (this.geometries.isEmpty())
+            return null;
+        List<Point> result = null, points;
+        for (Intersectable geometry : this.geometries) {
+            points = geometry.findIntersections(ray);
+            if (points!=null)
+                if (result == null)
+                    result = points;
+                else
+                    result.addAll(points);
+        }
+        return result;
     }
 }
