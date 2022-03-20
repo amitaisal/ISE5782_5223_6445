@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +45,29 @@ public class Sphere implements Geometry{
      * @return
      */
     public List<Point> findIntersections(Ray ray){
-        return null;
+
+        Vector u= this.center.subtract(ray.getP0());
+        double tm= u.dotProduct(ray.getDir());
+        double d= Math.sqrt(u.lengthSquared()-tm*tm);
+        if (d >= this.radius)
+            return null;
+        double th= Math.sqrt(this.radius*this.radius-d*d);
+        double t1= tm+th;
+        double t2= tm-th;
+        LinkedList<Point> linkedList = new LinkedList<>();
+        if (t1>0)
+        {
+            Point point = ray.getP0().add(ray.getDir().scale(t1));
+            linkedList.add(point);
+        }
+        if (t2>0)
+        {
+            Point point = ray.getP0().add(ray.getDir().scale(t2));
+            linkedList.add(point);
+        }
+        if (linkedList.isEmpty())
+            return null;
+        return linkedList;
     }
 
 
