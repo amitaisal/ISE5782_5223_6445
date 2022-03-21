@@ -42,7 +42,7 @@ public class Geometries implements Intersectable {
         List<Point> result = null, points;
         for (Intersectable geometry : this.geometries) {
             points = geometry.findIntersections(ray);
-            if (points!=null)
+            if (points != null)
                 if (result == null)
                     result = points;
                 else

@@ -78,9 +78,7 @@ public class Plane implements Geometry{
         if (t > 0)
         {
             Point point =  ray.getP0().add(ray.getDir().scale(t));
-            LinkedList<Point> linkedList = new LinkedList<>();
-            linkedList.add(point);
-            return linkedList;
+            return List.of(point);
         }
         return null;
     }
