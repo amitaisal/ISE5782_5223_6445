@@ -57,7 +57,7 @@ public class Point {
         return Objects.equals(xyz, point.xyz);
     }
 
-    public double getx() {
+    public double getX() {
         return this.xyz.d1;
     }
 }

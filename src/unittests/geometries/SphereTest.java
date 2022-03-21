@@ -48,7 +48,7 @@ class SphereTest {
         Point p2=new Point(2,1,0);
         List<Point> result= sphere.findIntersections(new Ray(new Point(-1,0,0),new Vector(3,1,0)));
         assertEquals(2,result.size(),"Wrong number of points");
-        if (result.get(0).getx()>result.get(1).getx())
+        if (result.get(0).getX()>result.get(1).getX())
             result=List.of(result.get(1),result.get(0));
         assertEquals(List.of(p1,p2),result,"Ray crosses sphere");
 
@@ -89,7 +89,7 @@ class SphereTest {
         // Group: Ray's line goes through the center
         // TC06: Ray starts before the sphere-2 points
         result = sphere.findIntersections(new Ray(new Point(0,0,0), new Vector(1,0,0)));
-        if (result.get(0).getx()>result.get(1).getx())
+        if (result.get(0).getX()>result.get(1).getX())
             result=List.of(result.get(1),result.get(0));
         assertEquals(List.of(new Point(1,0,0), new Point(3,0,0)), result, "Bad intersection points");
 
@@ -104,11 +104,8 @@ class SphereTest {
         assertEquals(List.of(new Point(3,0,0)), result, "Bad intersection point");
 
         // TC09: Ray starts at the center-1 points
-        try {
-            result = sphere.findIntersections(new Ray(new Point(2,0,0), new Vector(1,0,0)));
-            fail("Error when ray starts at center of sphere");
-        }
-        catch (IllegalArgumentException exception){}
+        result = sphere.findIntersections(new Ray(new Point(2,0,0), new Vector(1,0,0)));
+        assertEquals(1, result.size(),"Error when ray starts at center of sphere");
 
         // TC10: Ray starts at sphere and goes outside-0 points
         result = sphere.findIntersections(new Ray(new Point(3,0,0), new Vector(1,0,0)));
