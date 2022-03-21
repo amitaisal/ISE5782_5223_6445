@@ -40,7 +40,7 @@ public class Camera {
         return width;
     }
 
-    public Camera(Point p0, Vector vUp, Vector vTo) {
+    public Camera(Point p0, Vector vTo, Vector vUp) {
         if(!isZero(vUp.dotProduct(vTo)))
             throw new IllegalArgumentException();
         this.vUp = vUp.normalize();

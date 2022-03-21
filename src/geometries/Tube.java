@@ -54,9 +54,10 @@ public class Tube implements Geometry{
 
     @Override
     public String toString() {
-        return "axisRay=" + axisRay +
+        return "Tube(" +
+                "axisRay=" + axisRay.toString() +
                 ", radius=" + radius +
-                '}';
+                ')';
     }
 
     @Override
