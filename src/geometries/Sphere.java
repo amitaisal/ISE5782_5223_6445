@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static primitives.Util.alignZero;
-
 public class Sphere implements Geometry{
 
     private final Point center;
@@ -47,34 +45,29 @@ public class Sphere implements Geometry{
      * @return
      */
     public List<Point> findIntersections(Ray ray){
-        LinkedList<Point> linkedList = new LinkedList<>();
-        if (this.center.equals(ray.getP0()))
-        {
-            linkedList.add((this.center));
-            return linkedList;
-        }
+
+        if(ray.getP0().equals(this.center))
+            return List.of(ray.getPoint(this.radius));
+
         Vector u= this.center.subtract(ray.getP0());
         double tm= u.dotProduct(ray.getDir());
         double d= Math.sqrt(u.lengthSquared()-tm*tm);
+
         if (d >= this.radius)
             return null;
         double th= Math.sqrt(this.radius*this.radius-d*d);
         double t1= tm+th;
         double t2= tm-th;
-        if (alignZero(t1)>0)
-        {
-            Point point = ray.getPoint(t1);
-            linkedList.add(point);
-        }
-        if (alignZero(t2)>0)
-        {
-            Point point =  ray.getPoint(t2);
-            linkedList.add(point);
-        }
-        if (linkedList.isEmpty())
-            return null; // In case there are no intersections points
-        return linkedList;
+        if(t1 > 0 && t2 > 0)
+            return List.of(ray.getPoint(t1), ray.getPoint(t2));
+        if (t1>0)
+            return List.of(ray.getPoint(t1));
+        if (t2>0)
+            return List.of(ray.getPoint(t2));
+        return null;
     }
+
+
     @Override
     public String toString() {
         return "Sphere{" +

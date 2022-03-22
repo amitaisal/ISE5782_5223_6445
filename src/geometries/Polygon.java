@@ -96,4 +96,11 @@ public class Polygon implements Geometry {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "Polygon(" +
+				"vertices=" + vertices +
+				", plane=" + plane.toString() +
+				')';
+	}
 }

@@ -37,6 +37,7 @@ class SphereTest {
      */
     void testFindIntersections() {
         Sphere sphere= new Sphere(new Point(2,0,0),1d);
+
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Ray's line is outside the sphere-0 points
@@ -44,10 +45,10 @@ class SphereTest {
 
         // TC02: Ray starts before and crosses the sphere-2 points
         Point p1=new Point(1.4,0.8,0);
-         Point p2=new Point(2,1,0);
+        Point p2=new Point(2,1,0);
         List<Point> result= sphere.findIntersections(new Ray(new Point(-1,0,0),new Vector(3,1,0)));
         assertEquals(2,result.size(),"Wrong number of points");
-        if (result.get(0).getx()>result.get(1).getx())
+        if (result.get(0).getX()>result.get(1).getX())
             result=List.of(result.get(1),result.get(0));
         assertEquals(List.of(p1,p2),result,"Ray crosses sphere");
 
@@ -88,7 +89,7 @@ class SphereTest {
         // Group: Ray's line goes through the center
         // TC06: Ray starts before the sphere-2 points
         result = sphere.findIntersections(new Ray(new Point(0,0,0), new Vector(1,0,0)));
-        if (result.get(0).getx()>result.get(1).getx())
+        if (result.get(0).getX()>result.get(1).getX())
             result=List.of(result.get(1),result.get(0));
         assertEquals(List.of(new Point(1,0,0), new Point(3,0,0)), result, "Bad intersection points");
 
@@ -104,7 +105,7 @@ class SphereTest {
 
         // TC09: Ray starts at the center-1 points
         result = sphere.findIntersections(new Ray(new Point(2,0,0), new Vector(1,0,0)));
-        assertEquals(1, result.size(),"Wrong number of points");
+        assertEquals(1, result.size(),"Error when ray starts at center of sphere");
 
         // TC10: Ray starts at sphere and goes outside-0 points
         result = sphere.findIntersections(new Ray(new Point(3,0,0), new Vector(1,0,0)));

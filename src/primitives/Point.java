@@ -44,9 +44,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point{" +
-                "xyz=" + xyz +
-                '}';
+        return xyz.toString();
     }
 
     @Override
@@ -57,7 +55,7 @@ public class Point {
         return Objects.equals(xyz, point.xyz);
     }
 
-    public double getx() {
+    public double getX() {
         return this.xyz.d1;
     }
 }
