@@ -6,16 +6,18 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 public class Triangle extends Polygon {
 
     public Triangle(Point... vertices) {
         super(vertices);
     }
-    // Compute barycentric coordinates (u, v, w) for
-    // point p with respect to triangle (a, b, c)
+
     public List<Point> findIntersections(Ray ray){
         List<Point> result = plane.findIntersections(ray);
-        if (result==null)
+        if (result==null) // In case there is no intersection with the plane return null
             return null;
         Vector v1 = vertices.get(0).subtract(ray.getP0());
         Vector v2 = vertices.get(1).subtract(ray.getP0());
@@ -27,9 +29,8 @@ public class Triangle extends Polygon {
         double d2 = ray.getDir().dotProduct(n2);
         double d3 = ray.getDir().dotProduct(n3);
 
-        if((d1 < 0 && d2 < 0 && d3 < 0) || (d1 > 0 && d2 > 0 && d3 > 0))
-            return result;
-
+        if((d1 < 0 && d2 < 0 && d3 < 0) || (d1 > 0 && d2 > 0 && d3 > 0))  // In case the all scalars are in the same sign,
+            return result;// the point is in the triangle
         return null;
     }
 

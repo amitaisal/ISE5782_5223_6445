@@ -15,12 +15,14 @@ public class Ray {
         return p0;
     }
 
-    public Point getPoint(double t) {
-        return this.p0.add(this.dir.scale(t));
-    }
 
     public Vector getDir() {
         return dir;
+    }
+
+    public Point getPoint(double t) { // Function calculate - P = P0 + v * t
+        Point p = p0.add(dir.scale(t));
+        return p;
     }
 
     @Override
