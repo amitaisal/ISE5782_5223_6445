@@ -24,14 +24,14 @@ class CameraTest {
 	void testConstructRay() {
 		Camera camera = new Camera(ZERO_POINT,
 				new Vector(0, 0, -1),
-				new Vector(0, -1, 0)).setVPDistance(10);
+				new Vector(0, -1, 0)).setVPDistance(10); // vRight (-1,0,0)
 		String badRay = "Bad ray";
 
 		// ============ Equivalence Partitions Tests ==============
 		// EP01: 4X4 Inside (1,1)
 		assertEquals(new Ray(ZERO_POINT, new Vector(1, -1, -10)),
-				camera.setVPSize(8, 8)
-						.constructRay(4, 4, 1, 1), badRay);
+				camera.setVPSize(8, 8).constructRay(4, 4, 1, 1), badRay);
+
 
 		// =============== Boundary Values Tests ==================
 		// BV01: 3X3 Center (1,1)

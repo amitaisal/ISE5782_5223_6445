@@ -45,7 +45,7 @@ public class Camera {
             throw new IllegalArgumentException();
         this.vUp = vUp.normalize();
         this.vTo = vTo.normalize();
-        this.vRight = vUp.crossProduct(vTo).normalize();
+        this.vRight = vTo.crossProduct(vUp).normalize();
         this.p0 = p0;
     }
 
@@ -61,6 +61,22 @@ public class Camera {
     }
 
     public Ray constructRay (int nX, int nY, int j, int i) {
-        return null;
+        Point pc = this.p0.add(this.vTo.scale(this.distance));  // refactoring
+        double ry = this.height/nY;
+        double rx = this.width/nX;
+
+        double xj = (j - alignZero((nX-1)/2.0)) * rx;
+        double yi = -1 * (i - alignZero((nY-1)/2.0)) * ry;
+        Point pij = pc;
+        if (!isZero(xj))
+            pij = pij.add(this.vRight.scale(xj));
+        if (!isZero(yi))
+            pij = pij.add(this.vUp.scale(yi));
+        Vector vij = pij.subtract(this.p0);
+        return new Ray(this.p0, vij);
     }
 }
+
+
+
+
