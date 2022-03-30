@@ -1,3 +1,5 @@
+/*
+
 package unittests.renderer;
 
 import org.junit.jupiter.api.Test;
@@ -11,14 +13,14 @@ import scene.Scene;
 /**
  * Test rendering a basic image
  * 
- * @author Dan
- */
+ * @author(s) Amitai and Nerya
+ *
 public class RenderTests {
 
 	/**
 	 * Produce a scene with basic 3D model and render it into a png image with a
 	 * grid
-	 */
+	 *
 	@Test
 	public void basicRenderTwoColorTest() {
 		Scene scene = new Scene("Test scene")//
@@ -46,7 +48,7 @@ public class RenderTests {
 
 	/**
 	 * Test for XML based scene - for bonus
-	 */
+	 *
 	@Test
 	public void basicRenderXml() {
 		Scene scene = new Scene("XML Test scene");
@@ -63,3 +65,4 @@ public class RenderTests {
 		camera.writeToImage();
 	}
 }
+*/

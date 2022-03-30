@@ -15,7 +15,7 @@ import javax.imageio.*;
  * responsible of holding image related parameters of View Plane - pixel matrix
  * size and resolution
  * 
- * @author Dan
+ * @author(s) Amitai and Nerya
  */
 public class ImageWriter {
 	private int nX;

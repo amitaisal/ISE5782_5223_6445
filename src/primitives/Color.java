@@ -6,7 +6,7 @@ package primitives;
  * 255. Some additional operations are added that are useful for manipulating
  * light's colors
  * 
- * @author Dan Zilberstein
+ * @author Amitai and Nerya
  */
 public class Color {
 	/**
