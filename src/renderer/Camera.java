@@ -1,7 +1,12 @@
 package renderer;
 
 import primitives.*;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import static primitives.Util.*;
+import static primitives.Util.alignZero;
 
 public class Camera {
     private Point p0;
@@ -74,6 +79,100 @@ public class Camera {
             pij = pij.add(this.vUp.scale(yi));
         Vector vij = pij.subtract(this.p0);
         return new Ray(this.p0, vij);
+    }
+
+    public Camera setRotateX(double theta){
+        double radian = -theta * Math.PI / 180;
+        double x = vTo.getX();
+        double y = vTo.getY();
+        double z = vTo.getZ();
+
+        double cos = alignZero(Math.cos(radian));
+        double sin = alignZero(Math.sin(radian));
+        double Cos = (1-cos);
+
+        Vector rotateX = new Vector(
+                x*x*Cos + cos,
+                y*x*Cos - z*sin,
+                z*x*Cos + y*sin);
+        Vector rotateY = new Vector(
+                x*y*Cos + z*sin,
+                y*y*Cos + cos,
+                z*y*Cos - x*sin);
+        Vector rotateZ = new Vector(
+                x*z*Cos - y*sin,
+                y*z*Cos + x*sin,
+                z*z*Cos + cos);
+
+        this.vRight = rotation(this.vRight, List.of(rotateX, rotateY, rotateZ));
+        this.vUp = rotation(this.vUp, List.of(rotateX, rotateY, rotateZ));
+
+        return this;
+    }
+
+    public Camera setRotateY(double theta){
+        double radian = -theta * Math.PI / 180;
+        double x = vRight.getX();
+        double y = vRight.getY();
+        double z = vRight.getZ();
+
+        double cos = alignZero(Math.cos(radian));
+        double sin = alignZero(Math.sin(radian));
+        double Cos = (1-cos);
+
+        Vector rotateX = new Vector(
+                x*x*Cos + cos,
+                y*x*Cos - z*sin,
+                z*x*Cos + y*sin);
+        Vector rotateY = new Vector(
+                x*y*Cos + z*sin,
+                y*y*Cos + cos,
+                z*y*Cos - x*sin);
+        Vector rotateZ = new Vector(
+                x*z*Cos - y*sin,
+                y*z*Cos + x*sin,
+                z*z*Cos + cos);
+
+        this.vTo = rotation(this.vTo, List.of(rotateX, rotateY, rotateZ));
+        this.vUp = rotation(this.vUp, List.of(rotateX, rotateY, rotateZ));
+
+        return this;
+    }
+
+    public Camera setRotateZ(double theta){
+        double radian = -theta * Math.PI / 180;
+        double x = vUp.getX();
+        double y = vUp.getY();
+        double z = vUp.getZ();
+
+        double cos = alignZero(Math.cos(radian));
+        double sin = alignZero(Math.sin(radian));
+        double Cos = (1-cos);
+
+        Vector rotateX = new Vector(
+                x*x*Cos + cos,
+                y*x*Cos - z*sin,
+                z*x*Cos + y*sin);
+        Vector rotateY = new Vector(
+                x*y*Cos + z*sin,
+                y*y*Cos + cos,
+                z*y*Cos - x*sin);
+        Vector rotateZ = new Vector(
+                x*z*Cos - y*sin,
+                y*z*Cos + x*sin,
+                z*z*Cos + cos);
+
+        this.vTo = rotation(this.vTo, List.of(rotateX, rotateY, rotateZ));
+        this.vRight = rotation(this.vRight, List.of(rotateX, rotateY, rotateZ));
+
+        return this;
+    }
+
+    private Vector rotation(Vector vector, List<Vector> rotate) {
+        double x = vector.dotProduct(rotate.get(0));
+        double y = vector.dotProduct(rotate.get(1));
+        double z = vector.dotProduct(rotate.get(2));
+        return new Vector(x,y,z);
     }
 }
 
