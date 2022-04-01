@@ -15,6 +15,9 @@ import primitives.*;
  */
 class CameraTest {
 	static final Point ZERO_POINT = new Point(0, 0, 0);
+	Camera camera = new Camera(ZERO_POINT,
+			new Vector(0, 0, -1),
+			new Vector(0, -1, 0)).setVPDistance(10); // vRight (-1,0,0)
 
 	/**
 	 * Test method for
@@ -22,9 +25,6 @@ class CameraTest {
 	 */
 	@Test
 	void testConstructRay() {
-		Camera camera = new Camera(ZERO_POINT,
-				new Vector(0, 0, -1),
-				new Vector(0, -1, 0)).setVPDistance(10); // vRight (-1,0,0)
 		String badRay = "Bad ray";
 
 		// ============ Equivalence Partitions Tests ==============
@@ -58,6 +58,30 @@ class CameraTest {
 		assertEquals(new Ray(ZERO_POINT, new Vector(1, -3, -10)),
 				camera.setVPSize(8, 8).constructRay(4, 4, 1, 0), badRay);
 
-}
+	}
 
+	@Test
+	/**
+	 * Test method for {@link Camera.SetRotateX}
+	 */
+	void testSetRotateX() {
+		Vector vectorY = new Vector(0,-1,0);
+		Vector vectorZ = new Vector(1,0,0);
+
+		assertEquals(vectorY,camera.setRotateX(90).getvRight());
+	}
+
+	@Test
+	/**
+	 * Test method for {@link Camera.SetRotateY}
+	 */
+	void testSetRotateY() {
+	}
+
+	@Test
+	/**
+	 * Test method for {@link Camera.SetRotateZ}
+	 */
+	void testSetRotateZ() {
+	}
 }
