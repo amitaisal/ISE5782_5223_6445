@@ -1,7 +1,6 @@
 package unittests.geometries;
 
-import geometries.Plane;
-import geometries.Polygon;
+import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -83,7 +82,8 @@ class PolygonTest {
      */
     void testFindIntersections() {
         Ray ray;
-        Plane plane = new Plane(new Point(2,0,0),
+        Plane plane = new Plane(
+                new Point(2,0,0),
                 new Point(2,1,0),
                 new Point(2,1,1));
 
@@ -91,7 +91,7 @@ class PolygonTest {
 
         // TC01: Ray's line is towards the plane-1 point
         ray = new Ray(new Point(1,0,0), new Vector(1,0,0));
-        assertEquals(1, plane.findIntersections(ray),
+        assertEquals(1, plane.findIntersections(ray).size(),
                 "ERROR: findIntersections for plane doesn't work properly");
 
         // TC02: Ray's line is parallel to the plane-0 point

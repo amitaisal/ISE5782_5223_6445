@@ -2,7 +2,6 @@ package renderer;
 
 import primitives.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.*;
@@ -79,6 +78,11 @@ public class Camera {
             pij = pij.add(this.vUp.scale(yi));
         Vector vij = pij.subtract(this.p0);
         return new Ray(this.p0, vij);
+    }
+
+    public Object setImageWriter(ImageWriter imageWriter) {
+
+        return this;
     }
 
     public Camera setRotateX(double theta){
@@ -173,6 +177,16 @@ public class Camera {
         double y = vector.dotProduct(rotate.get(1));
         double z = vector.dotProduct(rotate.get(2));
         return new Vector(x,y,z);
+    }
+
+
+    public void renderImage() {
+    }
+
+    public void printGrid(int i, Color color) {
+    }
+
+    public void writeToImage() {
     }
 }
 
