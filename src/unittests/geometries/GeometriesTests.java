@@ -29,7 +29,8 @@ class GeometriesTests {
         // ============ Equivalence Partitions Tests ==============
         //TC01: Some of the Geometries are intersected
         Ray ray= new Ray(new Point(1,0,0), new Vector(6,0,4));
-        assertEquals(2,collection.findIntersections(ray).size(),"Bad intersects");
+        int num = collection.findIntersections(ray).size();
+        assertEquals(2, num,"Bad intersects");
 
         // =============== Boundary Values Tests ==================
         // TC01: All the Geometries are intersected

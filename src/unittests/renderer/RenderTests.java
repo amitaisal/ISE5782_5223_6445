@@ -1,4 +1,4 @@
-/*
+
 
 package unittests.renderer;
 
@@ -14,21 +14,23 @@ import scene.Scene;
  * Test rendering a basic image
  * 
  * @author(s) Amitai and Nerya
- *
+ */
 public class RenderTests {
 
 	/**
 	 * Produce a scene with basic 3D model and render it into a png image with a
 	 * grid
-	 *
+	 */
 	@Test
 	public void basicRenderTwoColorTest() {
 		Scene scene = new Scene("Test scene")//
-				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), //
-						                          new Double3(1,1,1))) //
+				.setAmbientLight(
+						new AmbientLight(
+								new Color(255, 191, 191),
+								new Double3(1,1,1)))
 				.setBackground(new Color(75, 127, 90));
 
-		scene.geometries.add(new Sphere(50, new Point(0, 0, -100)),
+		scene.geometries.add(new Sphere(new Point(0, 0, -100),50),
 				new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)), // up
 																													// left
 				new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100)), // down
@@ -39,7 +41,7 @@ public class RenderTests {
 				.setVPDistance(100) //
 				.setVPSize(500, 500) //
 				.setImageWriter(new ImageWriter("base render test", 1000, 1000))				
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracers(new RayTracerBasic(scene));
 
 		camera.renderImage();
 		camera.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -48,7 +50,7 @@ public class RenderTests {
 
 	/**
 	 * Test for XML based scene - for bonus
-	 *
+	 */
 	@Test
 	public void basicRenderXml() {
 		Scene scene = new Scene("XML Test scene");
@@ -65,4 +67,3 @@ public class RenderTests {
 		camera.writeToImage();
 	}
 }
-*/
