@@ -2,7 +2,9 @@ package renderer;
 
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.MissingResourceException;
 
 import static primitives.Util.*;
 import static primitives.Util.alignZero;
@@ -15,6 +17,8 @@ public class Camera {
     private double distance;
     private double height;
     private double width;
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracer;
 
     public Point getP0() {
         return p0;
@@ -80,8 +84,53 @@ public class Camera {
         return new Ray(this.p0, vij);
     }
 
-    public Object setImageWriter(ImageWriter imageWriter) {
+    public Camera setImageWriter(ImageWriter imageWriter) {
+        this.imageWriter = imageWriter;
+        return this;
+    }
+    public void renderImage() {
+        if (this.p0==null||this.vUp==null||this.vTo==null||this.vRight==null||
+                this.imageWriter==null||this.rayTracer==null) {
+            throw new MissingResourceException("","","");
+        }
 
+        for (int j = 0; j < this.height; j++) {
+            for (int i = 0; i < this.width; i++) {
+               imageWriter.writePixel(j,i,castRay((int) this.width, (int) this.height,i,j));
+            }
+        }
+
+    }
+
+    public Color castRay(int nx,int ny,int i,int j) {
+        Ray ray = constructRay(nx,ny,i,j);
+        return rayTracer.traceRay(ray);
+    }
+
+    public void printGrid(int interval, Color color) {
+
+        if (this.imageWriter==null)
+            throw new MissingResourceException("","","");
+
+        for (int i = 0; i < interval; i+=interval) {
+            for (int j = 0; j < interval; j+=interval) {
+                this.imageWriter.writePixel(i,j,color);
+            }
+        }
+    }
+
+
+    public void writeToImage() {
+        if (this.imageWriter==null)
+            throw new MissingResourceException("","","");
+
+        this.imageWriter.writeToImage();
+
+
+    }
+
+    public Camera setRayTracer(RayTracerBasic rayTracer) {
+        this.rayTracer = rayTracer;
         return this;
     }
 
@@ -179,15 +228,6 @@ public class Camera {
         return new Vector(x,y,z);
     }
 
-
-    public void renderImage() {
-    }
-
-    public void printGrid(int i, Color color) {
-    }
-
-    public void writeToImage() {
-    }
 }
 
 

@@ -19,6 +19,7 @@ public class Scene {
     }
 
     public Scene(String sceneName) {
+        this.background = new Color(0,0,0);
         this.sceneName = sceneName;
         this.geometries = new Geometries();
     }
