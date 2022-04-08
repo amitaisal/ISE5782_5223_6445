@@ -7,18 +7,28 @@ import renderer.ImageWriter;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ImageWriterTest {
-    ImageWriter imageWriter = new ImageWriter("Nerya", 800, 500);
+    public int width = 800;
+    public int height = 500;
+    public int interval = 50;
+    ImageWriter imageWriter = new ImageWriter("imageTest", width, height);
 
     @Test
     void writeToImage() {
-        for (int i = 0;i < 800; i++)
-        {
-            for (int j = 0; j < 500;j++)
-            {
-                if (i % 50 == 0 || j % 50 == 0)
-                    imageWriter.writePixel(i,j,new Color(30,30,150));
-                else
-                    imageWriter.writePixel(i,j,new Color(255,255,150));
+        for (int i = 0;i < width; i++) {
+            for (int j = 0; j < height;j++) {
+                imageWriter.writePixel(i,j,new Color(180,150,100));
+            }
+        }
+
+        for (int i = 0; i < width; i+=50) {
+            for (int j = 0; j < height; j++) {
+                imageWriter.writePixel(i,j,new Color(30,30,150));
+            }
+        }
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j+=50) {
+                imageWriter.writePixel(i,j,new Color(30,30,150));
             }
         }
         imageWriter.writeToImage();

@@ -68,6 +68,24 @@ public class Camera {
         return this;
     }
 
+    public Camera setImageWriter(ImageWriter imageWriter) {
+        this.imageWriter = imageWriter;
+        return this;
+    }
+
+    public Camera setRayTracer(RayTracerBasic rayTracer) {
+        this.rayTracer = rayTracer;
+        return this;
+    }
+
+    /**
+     *
+     * @param nX
+     * @param nY
+     * @param j
+     * @param i
+     * @return
+     */
     public Ray constructRay (int nX, int nY, int j, int i) {
         Point pc = this.p0.add(this.vTo.scale(this.distance));  // refactoring
         double ry = this.height/nY;
@@ -84,10 +102,6 @@ public class Camera {
         return new Ray(this.p0, vij);
     }
 
-    public Camera setImageWriter(ImageWriter imageWriter) {
-        this.imageWriter = imageWriter;
-        return this;
-    }
     public void renderImage() {
         if (this.p0==null||this.vUp==null||this.vTo==null||this.vRight==null||
                 this.imageWriter==null||this.rayTracer==null) {
@@ -96,44 +110,59 @@ public class Camera {
 
         for (int j = 0; j < this.height; j++) {
             for (int i = 0; i < this.width; i++) {
-               imageWriter.writePixel(j,i,castRay((int) this.width, (int) this.height,i,j));
+               imageWriter.writePixel(j,i,castRay((int) this.width, (int) this.height,j,i));
             }
         }
 
     }
 
-    public Color castRay(int nx,int ny,int i,int j) {
-        Ray ray = constructRay(nx,ny,i,j);
+    /**
+     *
+     * @param nx
+     * @param ny
+     * @param i
+     * @param j
+     * @return
+     */
+    public Color castRay(int nx,int ny,int j,int i) {
+        Ray ray = constructRay(nx,ny,j,i);
         return rayTracer.traceRay(ray);
     }
 
+    /**
+     *
+     * @param interval
+     * @param color
+     */
     public void printGrid(int interval, Color color) {
 
         if (this.imageWriter==null)
             throw new MissingResourceException("","","");
 
-        for (int i = 0; i < interval; i+=interval) {
-            for (int j = 0; j < interval; j+=interval) {
-                this.imageWriter.writePixel(i,j,color);
+        for (int i = 0; i < this.width; i+=interval) {
+            for (int j = 0; j < this.height; j++) {
+                this.imageWriter.writePixel(i,j,new Color(color.getColor()));
+            }
+        }
+
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j+=interval) {
+                this.imageWriter.writePixel(i,j,new Color(color.getColor()));
             }
         }
     }
 
-
     public void writeToImage() {
         if (this.imageWriter==null)
             throw new MissingResourceException("","","");
-
         this.imageWriter.writeToImage();
-
-
     }
 
-    public Camera setRayTracer(RayTracerBasic rayTracer) {
-        this.rayTracer = rayTracer;
-        return this;
-    }
-
+    /**
+     *
+     * @param theta
+     * @return
+     */
     public Camera setRotateX(double theta){
         double radian = -theta * Math.PI / 180;
         double x = vTo.getX();
@@ -163,6 +192,11 @@ public class Camera {
         return this;
     }
 
+    /**
+     *
+     * @param theta
+     * @return
+     */
     public Camera setRotateY(double theta){
         double radian = -theta * Math.PI / 180;
         double x = vRight.getX();
@@ -192,6 +226,11 @@ public class Camera {
         return this;
     }
 
+    /**
+     *
+     * @param theta
+     * @return
+     */
     public Camera setRotateZ(double theta){
         double radian = -theta * Math.PI / 180;
         double x = vUp.getX();
@@ -221,6 +260,12 @@ public class Camera {
         return this;
     }
 
+    /**
+     *
+     * @param vector
+     * @param rotate
+     * @return
+     */
     private Vector rotation(Vector vector, List<Vector> rotate) {
         double x = vector.dotProduct(rotate.get(0));
         double y = vector.dotProduct(rotate.get(1));
