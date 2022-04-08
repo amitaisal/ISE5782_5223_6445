@@ -108,9 +108,9 @@ public class Camera {
             throw new MissingResourceException("","","");
         }
 
-        for (int j = 0; j < this.height; j++) {
-            for (int i = 0; i < this.width; i++) {
-               imageWriter.writePixel(j,i,castRay((int) this.width, (int) this.height,j,i));
+        for (int j = 0; j < this.imageWriter.getNy(); j++) {
+            for (int i = 0; i < this.imageWriter.getNx(); i++) {
+               imageWriter.writePixel(j,i,castRay(this.imageWriter.getNx(),this.imageWriter.getNy() ,j,i));
             }
         }
 
@@ -139,14 +139,14 @@ public class Camera {
         if (this.imageWriter==null)
             throw new MissingResourceException("","","");
 
-        for (int i = 0; i < this.width; i+=interval) {
-            for (int j = 0; j < this.height; j++) {
+        for (int i = 0; i < this.imageWriter.getNx(); i+=interval) {
+            for (int j = 0; j < this.imageWriter.getNy(); j++) {
                 this.imageWriter.writePixel(i,j,new Color(color.getColor()));
             }
         }
 
-        for (int i = 0; i < this.width; i++) {
-            for (int j = 0; j < this.height; j+=interval) {
+        for (int i = 0; i < this.imageWriter.getNx(); i++) {
+            for (int j = 0; j < this.imageWriter.getNy(); j+=interval) {
                 this.imageWriter.writePixel(i,j,new Color(color.getColor()));
             }
         }
