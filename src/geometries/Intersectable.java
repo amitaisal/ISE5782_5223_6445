@@ -36,17 +36,10 @@ public abstract class Intersectable {
          * @param geometry
          * @param point
          */
+
         public GeoPoint(Geometry geometry, Point point) {
             this.geometry = geometry;
             this.point = point;
-        }
-
-        public List<GeoPoint> findGeoIntersections(Ray ray) {
-            return findGeoIntersectionsHelper(ray);
-        }
-
-        protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-            return null;
         }
 
 
@@ -65,5 +58,13 @@ public abstract class Intersectable {
                     ", point=" + point +
                     ')';
         }
+    }
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersectionsHelper(ray);
+    }
+
+
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        return null;
     }
 }

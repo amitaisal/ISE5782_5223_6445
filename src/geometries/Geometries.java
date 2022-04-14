@@ -52,4 +52,27 @@ public class Geometries extends Intersectable {
         }
         return result;
     }
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+        if (this.geometries.isEmpty())
+            return null;
+
+        List<GeoPoint> result = null;
+        for (Intersectable geometry : this.geometries) {
+
+            List<GeoPoint> points = geometry.findGeoIntersectionsHelper(ray);
+
+            if (points != null) {
+                if (result == null) {
+                    result = new LinkedList<>();
+                }
+                for (GeoPoint point : points) {
+                    result.add(point);
+                }
+            }
+
+        }
+        return result;
+    }
 }

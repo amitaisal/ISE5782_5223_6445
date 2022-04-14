@@ -25,7 +25,7 @@ public class RayTracerBasic extends RayTracerBase {
      */
     @Override
     public Color traceRay(Ray ray) {
-        List<Point> points = scene.geometries.findIntersections(ray);
+        List<GeoPoint> points = scene.geometries.findGeoIntersectionsHelper(ray);
         if(points == null)
             return scene.background;
 
@@ -36,6 +36,5 @@ public class RayTracerBasic extends RayTracerBase {
     private Color calcColor(GeoPoint point) {
         return point.geometry.getEmission();
     }
-
 
 }

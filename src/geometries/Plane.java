@@ -82,6 +82,34 @@ public class Plane extends Geometry{
         return null;
     }
 
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+
+        double numerator, denominator;
+
+        if(this.p0.equals(ray.getP0()))
+            return null;
+        // normal dot (Q - p0)
+        numerator = this.normal.dotProduct(this.p0.subtract(ray.getP0()));
+        // normal dot dir of ray
+        denominator = this.normal.dotProduct(ray.getDir());
+
+        if(isZero(denominator))
+            return null;
+
+        double t = alignZero(numerator / denominator);
+
+        // if t is positive it means the dir is towards the plane
+        // and there is an intersection point
+        if (t > 0)
+        {
+            Point point =  ray.getP0().add(ray.getDir().scale(t));
+            GeoPoint geoPoint =new GeoPoint(this,point);
+            return List.of(geoPoint);
+        }
+        return null;
+    }
+
+
     @Override
     public String toString() {
         return "Plane(" +

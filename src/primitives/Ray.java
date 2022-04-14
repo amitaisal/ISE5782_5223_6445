@@ -29,8 +29,27 @@ public class Ray {
         return p;
     }
 
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> Points){
-        return null;
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
+
+        if (points==null)
+            return null;
+
+        GeoPoint closestPoint=points.get(0);
+        Point point = closestPoint.point;
+
+        double distance = point.distanceSquared(this.p0);
+
+        for (GeoPoint geoPoint : points)
+        {
+
+            double distanceTemp=geoPoint.point.distanceSquared(this.p0);
+            if (distance > distanceTemp)
+            {
+                closestPoint=geoPoint;
+                distance=distanceTemp;
+            }
+        }
+        return closestPoint;
     }
 
     /***

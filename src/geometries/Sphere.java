@@ -66,6 +66,45 @@ public class Sphere extends Geometry{
         return null;
     }
 
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+
+        GeoPoint geoPoint1;
+        GeoPoint geoPoint2;
+        if(ray.getP0().equals(this.center))
+        {
+            Point point=ray.getPoint(this.radius);
+            geoPoint1=new GeoPoint(this,point);
+            return List.of(geoPoint1);
+        }
+
+        Vector u= this.center.subtract(ray.getP0());
+        double tm= u.dotProduct(ray.getDir());
+        double d= Math.sqrt(u.lengthSquared()-tm*tm);
+
+        if (d >= this.radius)
+            return null;
+        double th= Math.sqrt(this.radius*this.radius-d*d);
+        double t1= tm+th;
+        double t2= tm-th;
+        if(t1 > 0 && t2 > 0)
+        {
+            geoPoint1= new GeoPoint(this,ray.getPoint(t1));
+            geoPoint2= new GeoPoint(this,ray.getPoint(t2));
+            return List.of(geoPoint1, geoPoint2);
+        }
+        if (t1>0)
+        {
+            geoPoint1= new GeoPoint(this,ray.getPoint(t1));
+            return List.of(geoPoint1);
+        }
+        if (t2>0)
+        {
+            geoPoint1= new GeoPoint(this,ray.getPoint(t2));
+            return List.of(geoPoint1);
+        }
+        return null;
+    }
+
 
     @Override
     public String toString() {
