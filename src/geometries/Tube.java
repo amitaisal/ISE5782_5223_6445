@@ -7,7 +7,7 @@ import primitives.Vector;
 import java.util.List;
 import java.util.Objects;
 
-public class Tube implements Geometry{
+public class Tube extends Geometry{
 
     protected final Ray axisRay;
     protected final double radius;

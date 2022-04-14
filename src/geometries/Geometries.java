@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * A composite class to iterate all different geometries
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 
     private  List<Intersectable> geometries;
 
