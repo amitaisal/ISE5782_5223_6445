@@ -35,6 +35,7 @@ public class Triangle extends Polygon {
         List<GeoPoint> result = plane.findGeoIntersectionsHelper(ray);
         if (result==null) // In case there is no intersection with the plane return null
             return null;
+        result.get(0).geometry=this;
         Vector v1 = vertices.get(0).subtract(ray.getP0());
         Vector v2 = vertices.get(1).subtract(ray.getP0());
         Vector v3 = vertices.get(2).subtract(ray .getP0());
