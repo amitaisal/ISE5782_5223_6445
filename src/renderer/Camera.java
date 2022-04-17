@@ -113,7 +113,6 @@ public class Camera {
                imageWriter.writePixel(j,i,castRay(this.imageWriter.getNx(),this.imageWriter.getNy() ,j,i));
             }
         }
-
     }
 
     /**

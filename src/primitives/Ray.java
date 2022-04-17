@@ -29,24 +29,22 @@ public class Ray {
         return p;
     }
 
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
-
-        if (points==null)
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections){
+        if (intersections == null)
             return null;
 
-        GeoPoint closestPoint=points.get(0);
+        GeoPoint closestPoint = intersections.get(0);
         Point point = closestPoint.point;
 
         double distance = point.distanceSquared(this.p0);
 
-        for (GeoPoint geoPoint : points)
+        for (GeoPoint geoPoint : intersections)
         {
-
             double distanceTemp=geoPoint.point.distanceSquared(this.p0);
             if (distance > distanceTemp)
             {
-                closestPoint=geoPoint;
-                distance=distanceTemp;
+                closestPoint = geoPoint;
+                distance = distanceTemp;
             }
         }
         return closestPoint;
@@ -55,24 +53,11 @@ public class Ray {
     /***
      *
      */
-    public Point findClosestPoint(List<Point> points)
-    {
-        if (points==null)
-            return null;
-        Point closestPoint=points.get(0);
-        double distance = closestPoint.distanceSquared(this.p0);
-
-        for (Point point : points)
-        {
-            double distanceTemp=point.distanceSquared(this.p0);
-            if (distance > distanceTemp)
-            {
-                closestPoint=point;
-                distance=distanceTemp;
-            }
-        }
-        return closestPoint;
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
+
 
     @Override
     public String toString() {

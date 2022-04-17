@@ -25,16 +25,25 @@ public class RayTracerBasic extends RayTracerBase {
      */
     @Override
     public Color traceRay(Ray ray) {
-        List<GeoPoint> points = scene.geometries.findGeoIntersectionsHelper(ray);
-        if(points == null)
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+        if(intersections == null)
             return scene.background;
 
-        GeoPoint point = ray.findClosestGeoPoint(points);
-        return calcColor(point);
+        GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
+        return calcColor(closestPoint);
     }
 
-    private Color calcColor(GeoPoint point) {
-        return this.scene.ambientLight.getIntensity().add(point.geometry.getEmission());
+    private Color calcColor(GeoPoint geoPoint) {
+        double Ka;
+        double Kd;
+        double Ks;
+        double Shininess;
+        for (var light: this.scene.lights) {
+            light.getIntensity(geoPoint.point);
+        }
+        return this.scene.ambientLight.getIntensity()
+                .add(geoPoint.geometry.getEmission())
+                .add(this.scene.ambientLight.getIntensity().scale());
     }
 
 }

@@ -38,34 +38,6 @@ public class Sphere extends Geometry{
         return normal.normalize();
     }
 
-    /**
-     *
-     * @param ray
-     * @return
-     */
-    public List<Point> findIntersections(Ray ray){
-
-        if(ray.getP0().equals(this.center))
-            return List.of(ray.getPoint(this.radius));
-
-        Vector u= this.center.subtract(ray.getP0());
-        double tm= u.dotProduct(ray.getDir());
-        double d= Math.sqrt(u.lengthSquared()-tm*tm);
-
-        if (d >= this.radius)
-            return null;
-        double th= Math.sqrt(this.radius*this.radius-d*d);
-        double t1= tm+th;
-        double t2= tm-th;
-        if(t1 > 0 && t2 > 0)
-            return List.of(ray.getPoint(t1), ray.getPoint(t2));
-        if (t1>0)
-            return List.of(ray.getPoint(t1));
-        if (t2>0)
-            return List.of(ray.getPoint(t2));
-        return null;
-    }
-
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
 
         GeoPoint geoPoint1;
