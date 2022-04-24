@@ -108,7 +108,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param il
      * @return
      */
-    private Color calcDiffusive(Double3 kd, Vector l, Vector n, Color il) {
+    private Color calcDiffusive(Double3 kd, Vector l, Vector n,Color il) {
         double ln = alignZero(l.dotProduct(n));
         if (ln < 0)
             ln = ln * -1;
