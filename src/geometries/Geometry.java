@@ -1,9 +1,6 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Material;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
 
 /**
  *
@@ -31,4 +28,18 @@ public abstract class Geometry extends Intersectable {
         this.material = material;
         return this;
     }
+
+    public Double3 getkD() {
+         return material.kD;
+    }
+    public  Double3 getkS(){
+        return material.kS;
+    }
+
+    public int getShininess(){
+        return material.nShininess;
+    }
+
+
+
 }
