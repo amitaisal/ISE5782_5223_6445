@@ -32,10 +32,11 @@ public class Sphere extends Geometry{
      */
     @Override
     public Vector getNormal(Point point) {
-        Vector normal = point.subtract(this.center);
-        if(normal.length() != this.radius)
-            throw new IllegalArgumentException("The point is not on the surface of the sphere");
-        return normal.normalize();
+        //Vector normal = point.subtract(this.center);
+        //if(normal.length() != this.radius)
+          //  throw new IllegalArgumentException("The point is not on the surface of the sphere");
+        //return normal.normalize();
+        return (point.subtract(center)).normalize();
     }
 
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
