@@ -32,10 +32,6 @@ public class Sphere extends Geometry{
      */
     @Override
     public Vector getNormal(Point point) {
-        //Vector normal = point.subtract(this.center);
-        //if(normal.length() != this.radius)
-          //  throw new IllegalArgumentException("The point is not on the surface of the sphere");
-        //return normal.normalize();
         return (point.subtract(center)).normalize();
     }
 
@@ -61,18 +57,18 @@ public class Sphere extends Geometry{
         double t2= tm-th;
         if(t1 > 0 && t2 > 0)
         {
-            geoPoint1= new GeoPoint(this,ray.getPoint(t1));
-            geoPoint2= new GeoPoint(this,ray.getPoint(t2));
+            geoPoint1= new GeoPoint(this, ray.getPoint(t1));
+            geoPoint2= new GeoPoint(this, ray.getPoint(t2));
             return List.of(geoPoint1, geoPoint2);
         }
         if (t1>0)
         {
-            geoPoint1= new GeoPoint(this,ray.getPoint(t1));
+            geoPoint1= new GeoPoint(this, ray.getPoint(t1));
             return List.of(geoPoint1);
         }
         if (t2>0)
         {
-            geoPoint1= new GeoPoint(this,ray.getPoint(t2));
+            geoPoint1= new GeoPoint(this, ray.getPoint(t2));
             return List.of(geoPoint1);
         }
         return null;

@@ -1,6 +1,7 @@
 package geometries;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import primitives.*;
 import static primitives.Util.*;
@@ -60,13 +61,10 @@ public class Polygon extends Geometry {
 		Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
 		// Cross Product of any subsequent edges will throw an IllegalArgumentException
-		// because of Zero Vector if they connect three vertices that lay in the same
-		// line.
+		// because of Zero Vector if they connect three vertices that lay in the same line.
 		// Generate the direction of the polygon according to the angle between last and
-		// first edge being less than 180 deg. It is hold by the sign of its dot product
-		// with
-		// the normal. If all the rest consequent edges will generate the same sign -
-		// the
+		// first edge being less than 180 deg. It is hold by the sign of its dot product with
+		// the normal. If all the rest consequent edges will generate the same sign -the
 		// polygon is convex ("kamur" in Hebrew).
 		boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
 		for (var i = 1; i < vertices.length; ++i) {
@@ -87,8 +85,26 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
+	/**
+	 * Checks if ray intersects any of the triangles that make up the polygon.
+	 *
+	 * @param ray The ray that we want to check if it intersects with the polygon.
+	 * @return The intersection point of the ray with the plane.
+	 */
 	@Override
 	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+		List<GeoPoint> result = plane.findGeoIntersectionsHelper(ray);
+		if (result == null) // In case there is no intersection with the plane return null
+			return null;
+		result.get(0).geometry = this;
+
+		Point point = vertices.get(0);
+		for (int i = 1; i < vertices.size() - 1; i++) {
+			Triangle triangle = new Triangle(point, vertices.get(i), vertices.get(i + 1));
+			List<GeoPoint> geoPoint = triangle.findGeoIntersections(ray);
+			if(geoPoint != null)
+				return result;
+		}
 		return null;
 	}
 
