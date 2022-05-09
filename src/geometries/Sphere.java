@@ -7,6 +7,8 @@ import primitives.Vector;
 import java.util.List;
 import java.util.Objects;
 
+import static primitives.Util.alignZero;
+
 public class Sphere extends Geometry{
 
     private final Point center;
@@ -55,18 +57,18 @@ public class Sphere extends Geometry{
         double th= Math.sqrt(this.radius*this.radius-d*d);
         double t1= tm+th;
         double t2= tm-th;
-        if(t1 > 0 && t2 > 0)
+        if(alignZero(t1) > 0 && alignZero(t2) > 0)
         {
             geoPoint1= new GeoPoint(this, ray.getPoint(t1));
             geoPoint2= new GeoPoint(this, ray.getPoint(t2));
             return List.of(geoPoint1, geoPoint2);
         }
-        if (t1>0)
+        if (alignZero(t1)>0)
         {
             geoPoint1= new GeoPoint(this, ray.getPoint(t1));
             return List.of(geoPoint1);
         }
-        if (t2>0)
+        if (alignZero(t2)>0)
         {
             geoPoint1= new GeoPoint(this, ray.getPoint(t2));
             return List.of(geoPoint1);

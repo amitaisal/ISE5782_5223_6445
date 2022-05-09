@@ -1,5 +1,6 @@
 package primitives;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class Vector extends Point {
