@@ -6,15 +6,30 @@ import java.util.List;
 import java.util.Objects;
 import geometries.Intersectable.GeoPoint;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 public class Ray {
     private final Point p0;
     private final Vector dir;
+    private static final double DELTA = 0.1;
 
     public Ray(Point p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalize();
     }
 
+    public Ray(Point p0, Vector dir, Vector normal){
+        this.dir = dir;
+        double nv = alignZero(normal.dotProduct(dir));
+
+        if(isZero(nv))
+            this.p0 = p0;
+        else {
+            Vector deltaVector = normal.scale(nv>0? DELTA : -DELTA);
+            this.p0 = p0.add(deltaVector);
+        }
+    }
     public Point getP0() {
         return p0;
     }
@@ -25,7 +40,7 @@ public class Ray {
     }
 
     public Point getPoint(double t) { // Function calculate - P = P0 + v * t
-        Point p = p0.add(dir.scale(t));
+        Point p = this.p0.add(this.dir.scale(t));
         return p;
     }
 
