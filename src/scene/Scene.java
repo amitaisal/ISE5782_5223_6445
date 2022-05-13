@@ -1,3 +1,4 @@
+
 package scene;
 
 import lighting.AmbientLight;
@@ -29,8 +30,8 @@ public class Scene {
     }
 
     public Scene setAmbientLight(AmbientLight ambientLight) {
-         this.ambientLight = ambientLight;
-         return this;
+        this.ambientLight = ambientLight;
+        return this;
     }
 
     public Scene setBackground(primitives.Color color) {

@@ -5,7 +5,6 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
-
 import static primitives.Util.*;
 import static primitives.Util.alignZero;
 
@@ -102,7 +101,7 @@ public class Camera {
         return new Ray(this.p0, vij);
     }
 
-    public void renderImage() {
+    public Camera renderImage() {
         if (this.p0==null||this.vUp==null||this.vTo==null||this.vRight==null||
                 this.imageWriter==null||this.rayTracer==null) {
             throw new MissingResourceException("","","");
@@ -110,9 +109,10 @@ public class Camera {
 
         for (int j = 0; j < this.imageWriter.getNy(); j++) {
             for (int i = 0; i < this.imageWriter.getNx(); i++) {
-               imageWriter.writePixel(j,i,castRay(this.imageWriter.getNx(),this.imageWriter.getNy() ,j,i));
+                imageWriter.writePixel(j,i,castRay(this.imageWriter.getNx(),this.imageWriter.getNy() ,j,i));
             }
         }
+        return this;
     }
 
     /**
@@ -151,10 +151,11 @@ public class Camera {
         }
     }
 
-    public void writeToImage() {
+    public Camera writeToImage() {
         if (this.imageWriter==null)
             throw new MissingResourceException("","","");
         this.imageWriter.writeToImage();
+        return this;
     }
 
     /**

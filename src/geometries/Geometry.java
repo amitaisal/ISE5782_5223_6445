@@ -1,3 +1,4 @@
+
 package geometries;
 
 import primitives.*;
@@ -30,7 +31,7 @@ public abstract class Geometry extends Intersectable {
     }
 
     public Double3 getkD() {
-         return material.kD;
+        return material.kD;
     }
     public  Double3 getkS(){
         return material.kS;
