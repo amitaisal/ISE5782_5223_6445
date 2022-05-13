@@ -244,6 +244,14 @@ public class RayTracerBasic extends RayTracerBase {
         return true;
     }
 
+    /**
+     *
+     * @param geoPoint
+     * @param lightSource
+     * @param dir
+     * @param normal
+     * @return
+     */
     private Double3 transparency(GeoPoint geoPoint, LightSource lightSource, Vector dir, Vector normal) {
         Vector lightDir = dir.scale(-1); // from point to light source
 
@@ -253,12 +261,12 @@ public class RayTracerBasic extends RayTracerBase {
         Double3 ktr = new Double3(1.0);
 
         if (intersections == null)
-            return new Double3(1.0);
+            return ktr;
 
-        double lightDistance = lightSource.getDistance(geoPoint.point);
+        double lightDistance = lightSource.getDistance(lightRay.getP0());
 
         for (GeoPoint gp: intersections) {
-            if(alignZero(gp.point.distance(geoPoint.point)) - lightDistance <= 0){
+            if(alignZero(gp.point.distance(lightRay.getP0())) < lightDistance){
                 ktr = ktr.product(gp.geometry.getMaterial().getkT());
                 if(ktr.lowerThan(MIN_CALC_COLOR_K))
                     return new Double3(0.0);

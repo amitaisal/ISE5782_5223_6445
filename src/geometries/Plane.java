@@ -48,7 +48,7 @@ public class Plane extends Geometry{
             Vector vector = point.subtract(this.p0);
             double angle = vector.dotProduct(this.normal);
             if(angle != 0)
-                throw new IllegalArgumentException("The point is not on the plain");
+                throw new IllegalArgumentException("The point is not on the plane");
         }
         return normal;
     }
