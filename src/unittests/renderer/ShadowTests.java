@@ -14,7 +14,7 @@ import scene.Scene;
 /**
  * Testing basic shadows
  *
- * @author Dan
+ * @author Neriya & Amitai
  */
 public class ShadowTests {
 	private Intersectable sphere = new Sphere(new Point(0, 0, -200), 60d) //

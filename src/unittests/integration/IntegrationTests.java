@@ -1,4 +1,4 @@
-package unittests;
+package unittests.integration;
 
 import org.junit.jupiter.api.Test;
 

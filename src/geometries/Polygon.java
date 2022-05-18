@@ -87,26 +87,49 @@ public class Polygon extends Geometry {
 	}
 
 	/**
-	 * Checks if ray intersects any of the triangles that make up the polygon.
+	 * If the ray intersects the plane, and the ray is on the same side of all the edges, then the ray intersects the polygon
 	 *
-	 * @param ray The ray that we want to check if it intersects with the polygon.
+	 * @param ray the ray we're checking for intersections with
 	 * @return The intersection point of the ray with the plane.
 	 */
 	@Override
 	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-		List<GeoPoint> result = plane.findGeoIntersectionsHelper(ray);
-		if (result == null) // In case there is no intersection with the plane return null
-			return null;
-		result.get(0).geometry = this;
+		List<GeoPoint> intersections = this.plane.findGeoIntersections(ray);
 
-		Point point = vertices.get(0);
-		for (int i = 1; i < vertices.size() - 1; i++) {
-			Triangle triangle = new Triangle(point, vertices.get(i), vertices.get(i + 1));
-			List<GeoPoint> geoPoint = triangle.findGeoIntersections(ray);
-			if(geoPoint != null)
-				return result;
+		if (intersections == null)
+			return null; // no Intersections at all in the plane
+
+		int numOfVertices = vertices.size();
+		Point p0 = ray.getP0();
+		Vector dir = ray.getDir();
+
+		Vector v1 = vertices.get(numOfVertices - 1).subtract(p0);
+		Vector v2 = vertices.get(0).subtract(p0);
+
+		Vector n = v1.crossProduct(v2).normalize();
+		double vn = dir.dotProduct(n);
+		boolean positive = vn > 0;
+
+		if (isZero(vn))
+			return null;
+
+		for (int i = 1; i < numOfVertices; ++i) {
+			v1 = v2;
+			v2 = vertices.get(i).subtract(p0);
+			n = v1.crossProduct(v2).normalize();
+			vn = dir.dotProduct(n);
+
+			//no intersection
+			if (isZero(vn))
+				return null;
+
+			//not the same sign
+			if (vn > 0 != positive)
+				return null;
 		}
-		return null;
+
+		intersections.get(0).geometry = this;
+		return intersections;
 	}
 
 	@Override

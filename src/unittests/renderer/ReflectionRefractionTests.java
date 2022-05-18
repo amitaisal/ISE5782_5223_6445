@@ -15,7 +15,7 @@ import scene.Scene;
      * Tests for reflection and transparency functionality, test for partial shadows
      * (with transparency)
      *
-     * @author dzilb
+     * @author Neriya & Amitai
      */
     public class ReflectionRefractionTests {
         private Scene scene = new Scene("Test scene");
