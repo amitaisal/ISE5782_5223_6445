@@ -197,6 +197,7 @@ public class integrationRefractionReflectionTest {
                 new Point(-5900,-6000,6150),
                 new Vector(1,1,-1),
                 new Vector(1,1,2))
+                .setNumberOfRays(25)
                 .setVPSize(200, 200).setVPDistance(1500)
                 .setRayTracer(new RayTracerBasic(scene));
 
