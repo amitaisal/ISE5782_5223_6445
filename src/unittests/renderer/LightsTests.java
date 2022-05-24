@@ -12,7 +12,7 @@ import static java.awt.Color.*;
 /**
  * Test rendering a basic image
  * 
- * @author Dan
+ * @author Neriya & Amitai
  */
 public class LightsTests {
 	private Scene scene1 = new Scene("Test scene");
