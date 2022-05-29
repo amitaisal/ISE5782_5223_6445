@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.Plane;
 import primitives.*;
 
 import java.util.LinkedList;
@@ -24,8 +25,8 @@ public class Camera {
     private RayTracerBase rayTracer;
     private int numberOfRays = 1;
     private double focusField = 250;
-    private double focalLength = 150;
-    private double apertureSize = 2;
+    private double focalLength = 1;
+    private double apertureSize = 1;
 
     // This is the constructor of the camera class. It receives 2 vectors and a point.
     // The first thing it does is to check if the vUp and vTo vectors are orthogonal. If they are not, it throws an
@@ -137,7 +138,7 @@ public class Camera {
     }
 
     public Camera setFocusField(double focusField) {
-        this.focusField = focusField;
+        this.focusField = this.distance + focusField;
         return this;
     }
 
@@ -147,7 +148,7 @@ public class Camera {
     }
 
     public Camera setApertureSize(double apertureSize) {
-        this.apertureSize = apertureSize;
+        this.apertureSize = apertureSize / 10d;
         return this;
     }
 
@@ -282,9 +283,9 @@ public class Camera {
      */
     private Color colorSecondaryRays(Ray centerRay, Point focalPoint) {
         Color color = rayTracer.traceRay(centerRay);
-        Point apertureCenter = calcApertureFieldPoint(centerRay);
-        int i=0;
-        for (;i<36;i++){
+        Point apertureCenter = centerOfAperture(centerRay);
+        int i = 0;
+        for (; i < 36; i++){
             Vector v = vUp.rotateVector(vRight, i*10).scale(apertureSize).rotateVector(vUp,i*10);
             Point p = apertureCenter.add(v);
             Ray depthRay = new Ray(p, focalPoint.subtract(p));
@@ -300,9 +301,9 @@ public class Camera {
      * @param ray the ray that is being traced
      * @return The point on the aperture field that the ray intersects.
      */
-    private Point calcApertureFieldPoint(Ray ray) {
-        double len = this.focalLength / this.vTo.dotProduct(ray.getDir());
-        return ray.getPoint(len);
+    private Point centerOfAperture(Ray ray) {
+        double length = this.focalLength / this.vTo.dotProduct(ray.getDir());
+        return ray.getPoint(length);
     }
 
     /**
@@ -313,9 +314,8 @@ public class Camera {
      * @return The point on the focal plane that is the same distance from the center of the lens as the focal length.
      */
     private Point calcFocalFieldPoint(Ray centerRay) {
-        double angle = this.vTo.dotProduct(centerRay.getDir());
-        double len = this.focusField / angle;
-        return centerRay.getPoint(len);
+        double length = this.focusField / this.vTo.dotProduct(centerRay.getDir());
+        return centerRay.getPoint(length);
     }
 
     /**
@@ -333,7 +333,7 @@ public class Camera {
         int nY = this.imageWriter.getNy();
         for (int j = 0; j < nY; j++) {
             for (int i = 0; i < nX; i++) {
-                if(this.numberOfRays == 1 && this.apertureSize == 1 && checkColor(nX, nY, j, i))
+                if((this.numberOfRays == 1 && this.apertureSize == 1.0) || checkColor(nX, nY, j, i))
                     imageWriter.writePixel(j,i,castRay(nX,nY ,j,i));
                 else if(this.apertureSize != 0)
                     imageWriter.writePixel(j,i,castRayDepth(nX,nY ,j,i));
@@ -523,7 +523,3 @@ public class Camera {
         return new Vector(x,y,z);
     }
 }
-
-
-
-
