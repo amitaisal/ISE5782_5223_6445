@@ -3,6 +3,7 @@ package unittests.integration;
 import geometries.Intersectable;
 import geometries.Polygon;
 import geometries.Sphere;
+import geometries.Triangle;
 import lighting.AmbientLight;
 import lighting.DirectionalLight;
 import lighting.PointLight;
@@ -26,10 +27,11 @@ public class integrationRefractionReflectionTest {
     public void bookShelf() {
         Scene scene = new Scene("Test scene bookshelf");
         Camera camera1 = new Camera(
-                new Point(350,-16000,1250),
-                new Vector(0,1,0),
-                new Vector(0,0,1))
-                .setVPSize(200, 200).setVPDistance(2500)
+                new Point(-7500,-7500,3200),
+                new Vector(1,1,-1d/2),
+                new Vector(1,1,4))
+                .setVPSize(300, 300)
+                .setVPDistance(1500)
                 .setRayTracer(new RayTracerBasic(scene));
         Material wallsMat = new Material().setKd(0.5).setKs(0.2).setNShininess(30);
         Material material = new Material().setKd(0.5).setKs(0.2).setNShininess(30);
@@ -133,6 +135,36 @@ public class integrationRefractionReflectionTest {
                     lastX = sWall;
             }
         }
+
+        for (int i = 0; i < 10; i++) {
+            int min = 0, max = 450;
+            double lastX = nWall;
+            double lastY = wWall;
+            double intervalX = 350;
+            double intervalY = 270;
+            intervalX += (int)Math.floor(Math.random()*(max-min+1)+min);
+            min = 0;
+            max = 15;
+            int red = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int green = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int blue = (int)Math.floor(Math.random()*(max-min+1)+min);
+            Color Color = new Color(160 + red * 2, 40 + green, 40 + blue).reduce(3d / 2);
+
+            for (int j = 0; j < 4; j++) {
+                scene.geometries.add(
+                        new Polygon(
+                                new Point(lastX+5, lastY+5, floor),
+                                new Point(lastX+intervalX-5, lastY+5, floor),
+                                new Point(lastX+intervalX-5, lastY+intervalY-5, floor),
+                                new Point(lastX+5, lastY+intervalY-5, floor))
+                                .setEmission(Color)
+                                .setMaterial(bookShelfMat));
+                if(lastX <= sWall && j != 3)
+                    lastX += intervalX;
+                else
+                    lastX = sWall;
+            }
+        }
         Intersectable
                 wall11 = new Polygon(
                         new Point(nWall,eWall,ceiling),
@@ -162,6 +194,18 @@ public class integrationRefractionReflectionTest {
                         new Point(nWall,eWall,topWindow))
                         .setEmission(lWallColor)
                         .setMaterial(wallsMat),
+                ceiling1 = new Triangle(
+                        new Point(nWall,eWall,ceiling),
+                        new Point(sWall,eWall,ceiling),
+                        new Point((nWall+sWall)/2d,(eWall+wWall)/2d,ceiling*1.5))
+                        .setEmission(lWallColor)
+                        .setMaterial(wallsMat),
+                ceiling2 = new Triangle(
+                        new Point(sWall,eWall,ceiling),
+                        new Point(sWall,wWall,ceiling),
+                        new Point((nWall+sWall)/2d,(eWall+wWall)/2d,ceiling*1.5))
+                        .setEmission(lWallColor)
+                        .setMaterial(wallsMat),
                 window = new Polygon(
                         new Point(rightWindow,eWall + delta,topWindow),
                         new Point(rightWindow,eWall + delta,bottomWindow),
@@ -176,11 +220,39 @@ public class integrationRefractionReflectionTest {
                         new Point(leftWindow,eWall + delta,topWindow))
                         .setEmission(shelfColor)
                         .setMaterial(bookShelfMat),
+                frame12 = new Polygon(
+                        new Point(rightWindow+delta,eWall + delta,topWindow+delta),
+                        new Point(rightWindow+delta,eWall - delta,topWindow+delta),
+                        new Point(leftWindow,eWall - delta,topWindow+delta),
+                        new Point(leftWindow,eWall + delta,topWindow+delta))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
+                frame13 = new Polygon(
+                        new Point(rightWindow+delta,eWall - delta,topWindow+delta),
+                        new Point(rightWindow+delta,eWall - delta,topWindow),
+                        new Point(leftWindow,eWall - delta,topWindow),
+                        new Point(leftWindow,eWall - delta,topWindow+delta))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
                 frame21 = new Polygon(
                         new Point(rightWindow,eWall + delta,bottomWindow),
                         new Point(rightWindow,eWall - delta,bottomWindow),
                         new Point(leftWindow,eWall - delta,bottomWindow),
                         new Point(leftWindow,eWall + delta,bottomWindow))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
+                frame22 = new Polygon(
+                        new Point(rightWindow,eWall + delta,bottomWindow-delta),
+                        new Point(rightWindow,eWall - delta,bottomWindow-delta),
+                        new Point(leftWindow-delta,eWall - delta,bottomWindow-delta),
+                        new Point(leftWindow-delta,eWall + delta,bottomWindow-delta))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
+                frame23 = new Polygon(
+                        new Point(rightWindow,eWall - delta,bottomWindow-delta),
+                        new Point(rightWindow,eWall - delta,bottomWindow),
+                        new Point(leftWindow-delta,eWall - delta,bottomWindow),
+                        new Point(leftWindow-delta,eWall - delta,bottomWindow-delta))
                         .setEmission(shelfColor)
                         .setMaterial(bookShelfMat),
                 frame31 = new Polygon(
@@ -190,11 +262,39 @@ public class integrationRefractionReflectionTest {
                         new Point(rightWindow,eWall - delta,topWindow))
                         .setEmission(shelfColor)
                         .setMaterial(bookShelfMat),
+                frame32 = new Polygon(
+                        new Point(rightWindow+delta,eWall + delta,topWindow),
+                        new Point(rightWindow+delta,eWall + delta,bottomWindow-delta),
+                        new Point(rightWindow+delta,eWall - delta,bottomWindow-delta),
+                        new Point(rightWindow+delta,eWall - delta,topWindow))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
+                frame33 = new Polygon(
+                        new Point(rightWindow+delta,eWall - delta,topWindow),
+                        new Point(rightWindow+delta,eWall - delta,bottomWindow-delta),
+                        new Point(rightWindow,eWall - delta,bottomWindow-delta),
+                        new Point(rightWindow,eWall - delta,topWindow))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
                 frame41 = new Polygon(
                         new Point(leftWindow,eWall + delta,topWindow),
                         new Point(leftWindow,eWall + delta,bottomWindow),
                         new Point(leftWindow,eWall - delta,bottomWindow),
                         new Point(leftWindow,eWall - delta,topWindow))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
+                frame42 = new Polygon(
+                        new Point(leftWindow-delta,eWall + delta,topWindow+delta),
+                        new Point(leftWindow-delta,eWall + delta,bottomWindow),
+                        new Point(leftWindow-delta,eWall - delta,bottomWindow),
+                        new Point(leftWindow-delta,eWall - delta,topWindow+delta))
+                        .setEmission(shelfColor)
+                        .setMaterial(bookShelfMat),
+                frame43 = new Polygon(
+                        new Point(leftWindow-delta,eWall - delta,topWindow+delta),
+                        new Point(leftWindow-delta,eWall - delta,bottomWindow),
+                        new Point(leftWindow,eWall - delta,bottomWindow),
+                        new Point(leftWindow,eWall - delta,topWindow+delta))
                         .setEmission(shelfColor)
                         .setMaterial(bookShelfMat),
                 frame51 = new Polygon(
@@ -316,11 +416,16 @@ public class integrationRefractionReflectionTest {
                         new Point(sWall-shelfLength+delta*4,eWall-delta*4,floor),
                         new Point(sWall-shelfLength+delta*4,eWall-delta*2,floor))
                         .setEmission(shelfColor)
-                        .setMaterial(wallsMat);
-;
+                        .setMaterial(wallsMat)
+
+        ;
 
         scene.geometries.add(
-                frame11, frame21, frame31, frame41,
+                ceiling1, ceiling2,
+                frame11, frame12, frame13,
+                frame21, frame22, frame23,
+                frame31, frame32, frame33,
+                frame41, frame42, frame43,
                 frame51, frame61, frame71, frame81,
                 frame52, frame62, frame72, frame82,
                 poll11, poll12, poll13, poll14,

@@ -14,11 +14,14 @@ import scene.Scene;
 public class DepthOfFieldTest {
     Scene scene = new Scene("Test scene bookshelf");
     Camera camera = new Camera(
-            new Point(0,-330,110),
-            new Vector(0,1,-1d/3),
-            new Vector(0,1d/3,1))
+            new Point(40,-700,30),
+            new Vector(0,1,0),
+            new Vector(0,0,1))
             .setVPSize(200, 200)
-            .setVPDistance(200)
+            .setVPDistance(800)
+            .setFocalLength(200)
+            .setFocusField(50)
+            .setApertureSize(120)
             .setRayTracer(new RayTracerBasic(scene));
 
 
@@ -28,29 +31,30 @@ public class DepthOfFieldTest {
      */
     @Test
     public void trianglesSphere() {
-        Material material = new Material().setKd(0.5).setKs(0.2).setNShininess(30);
-
-        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+        Material material = new Material().setKd(0.5).setKs(0.2).setNShininess(30).setKr(0.8);
         scene.geometries.add(
                 new Polygon(
                         new Point(-500,500,-40),
                         new Point(500,500,-40),
                         new Point(500,-500,-40),
                         new Point(-500,-500,-40))
-                        .setEmission(new Color(java.awt.Color.GRAY)) //
-                        .setMaterial(material),
-                new Sphere(new Point(0, 0, 0), 40d) //
-                        .setEmission(new Color(java.awt.Color.RED)) //
-                        .setMaterial(material),
-                new Sphere(new Point(15, 100, 0), 40d) //
-                        .setEmission(new Color(java.awt.Color.GREEN)) //
-                        .setMaterial(material),
-                new Sphere(new Point(-15, -100, 0), 40d) //
-                        .setEmission(new Color(java.awt.Color.BLUE)) //
-                        .setMaterial(material)//
-        );
+                        .setEmission(new Color(java.awt.Color.GRAY).reduce(30)) //
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setNShininess(30)));
+        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+        for (int i = 0; i < 5; i++) {
+            int min = 50;
+            int max = 100;
+            int red = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int green = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int blue = (int)Math.floor(Math.random()*(max-min+1)+min);
+            scene.geometries.add(
+                    new Sphere(new Point(i*25, i*70, 0), 35d) //
+                            .setEmission(new Color(220, 100+green, 100+blue).reduce(3))
+                            .setMaterial(material));
+        }
+
         scene.lights.add( //
-                new SpotLight(new Color(700, 400, 400), new Point(40, 40, 115), new Vector(-1, -1, -4)) //
+                new PointLight(new Color(700, 400, 400), new Point(30, -90, 150)) //
                         .setKl(4E-4).setKq(2E-5));
 
         camera.setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
