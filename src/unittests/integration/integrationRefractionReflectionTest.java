@@ -29,7 +29,7 @@ public class integrationRefractionReflectionTest {
                 new Point(350,-16000,1250),
                 new Vector(0,1,0),
                 new Vector(0,0,1))
-                .setVPSize(200, 200).setVPDistance(1500)
+                .setVPSize(200, 200).setVPDistance(2500)
                 .setRayTracer(new RayTracerBasic(scene));
         Material wallsMat = new Material().setKd(0.5).setKs(0.2).setNShininess(30);
         Material material = new Material().setKd(0.5).setKs(0.2).setNShininess(30);

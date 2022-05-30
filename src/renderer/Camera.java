@@ -5,6 +5,7 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
 
 import static primitives.Util.*;
 import static primitives.Util.alignZero;
@@ -26,6 +27,8 @@ public class Camera {
     private double focusField = 250;
     private double focalLength = 150;
     private double apertureSize = 2;
+    private int _threads = 1;
+    private final int SPARE_THREADS = 2;
 
     // This is the constructor of the camera class. It receives 2 vectors and a point.
     // The first thing it does is to check if the vUp and vTo vectors are orthogonal. If they are not, it throws an
@@ -201,7 +204,7 @@ public class Camera {
         double randx;
         double randy;
         List<Ray> beam = new LinkedList<>();
-
+        Thread[] threads = new Thread[_threads];
         for (int k = 0; k < numberOfRays; k++) {
             randx = random(-rx/2, rx/2);
             randy = random(-ry/2, ry/2);
@@ -209,7 +212,6 @@ public class Camera {
             sRay = new Ray(this.p0, sPoint.subtract(this.p0));
             beam.add(sRay);
         }
-
         return beam;
     }
 
@@ -331,16 +333,21 @@ public class Camera {
 
         int nX = this.imageWriter.getNx();
         int nY = this.imageWriter.getNy();
-        for (int j = 0; j < nY; j++) {
-            for (int i = 0; i < nX; i++) {
-                if(this.numberOfRays == 1 && this.apertureSize == 1 && checkColor(nX, nY, j, i))
-                    imageWriter.writePixel(j,i,castRay(nX,nY ,j,i));
-                else if(this.apertureSize != 0)
-                    imageWriter.writePixel(j,i,castRayDepth(nX,nY ,j,i));
-                else if(this.numberOfRays != 1 )
-                    imageWriter.writePixel(j,i,castRaysAntiAliasing(nX,nY ,j,i));
-            }
-        }
+
+        IntStream.range(0,nX).parallel().forEach(i->{
+            IntStream.range(0,nY).parallel().forEach(j->{
+
+                        if(this.numberOfRays == 1 && this.apertureSize == 1 && checkColor(nX, nY, j, i))
+                            imageWriter.writePixel(j, i,castRay(nX,nY ,j,i));
+                        else if(this.apertureSize != 0)
+                            imageWriter.writePixel(j, i,castRayDepth(nX,nY ,j,i));
+                        else if(this.numberOfRays != 1 )
+                            imageWriter.writePixel(j, i,castRaysAntiAliasing(nX,nY ,j,i));
+            });
+        });
+
+
+
         return this;
     }
 

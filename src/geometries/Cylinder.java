@@ -5,7 +5,10 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
 import java.util.Objects;
+
+import static primitives.Util.alignZero;
 
 public class Cylinder extends Tube{
     private final double height;
@@ -67,5 +70,9 @@ public class Cylinder extends Tube{
         if (!super.equals(o)) return false;
         Cylinder cylinder = (Cylinder) o;
         return Double.compare(cylinder.height, height) == 0;
+    }
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+
+        return null;
     }
 }

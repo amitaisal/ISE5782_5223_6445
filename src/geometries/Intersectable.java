@@ -72,4 +72,5 @@ public abstract class Intersectable {
 
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 
+
 }
