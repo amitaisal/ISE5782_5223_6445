@@ -6,6 +6,7 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
 
 import static primitives.Util.*;
 import static primitives.Util.alignZero;
@@ -328,19 +329,40 @@ public class Camera {
                 this.imageWriter==null||this.rayTracer==null) {
             throw new MissingResourceException("","","");
         }
+        final int nX = this.imageWriter.getNx();
+        final int nY = this.imageWriter.getNy();
 
-        int nX = this.imageWriter.getNx();
-        int nY = this.imageWriter.getNy();
         for (int j = 0; j < nY; j++) {
             for (int i = 0; i < nX; i++) {
+                if((this.numberOfRays == 1 && this.apertureSize == 1.0) || checkColor(nX, nY, j, i))
+                   imageWriter.writePixel(j,i,castRay(nX,nY ,j,i));
+                else if(this.apertureSize != 0)
+                   imageWriter.writePixel(j,i,castRayDepth(nX,nY ,j,i));
+                else if(this.numberOfRays != 1 )
+                    imageWriter.writePixel(j,i,castRaysAntiAliasing(nX,nY ,j,i));
+            }
+        }
+        return this;
+    }
+
+    public Camera renderImageThreaded(){
+        if (this.p0==null||this.vUp==null||this.vTo==null||this.vRight==null||
+                this.imageWriter==null||this.rayTracer==null) {
+            throw new MissingResourceException("","","");
+        }
+        final int nX = this.imageWriter.getNx();
+        final int nY = this.imageWriter.getNy();
+
+        IntStream.range(0,nX).parallel().forEach(i->{
+            IntStream.range(0,nY).parallel().forEach(j->{
                 if((this.numberOfRays == 1 && this.apertureSize == 1.0) || checkColor(nX, nY, j, i))
                     imageWriter.writePixel(j,i,castRay(nX,nY ,j,i));
                 else if(this.apertureSize != 0)
                     imageWriter.writePixel(j,i,castRayDepth(nX,nY ,j,i));
                 else if(this.numberOfRays != 1 )
                     imageWriter.writePixel(j,i,castRaysAntiAliasing(nX,nY ,j,i));
-            }
-        }
+            });
+        });
         return this;
     }
 
