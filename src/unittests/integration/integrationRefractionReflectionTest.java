@@ -461,7 +461,7 @@ public class integrationRefractionReflectionTest {
                         new Vector(1, -1, -2)));
 
 
-        camera1.setImageWriter(new ImageWriter("bookshelf", 600, 600)) //
+        camera1.setImageWriter(new ImageWriter("bookshelf", 200, 200)) //
                 .renderImage();
         camera1.writeToImage();
     }

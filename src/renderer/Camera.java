@@ -170,6 +170,17 @@ public class Camera {
         return new Ray(this.p0, vij);
     }
 
+    /**
+     * > Given the number of rows and columns, the row and column index, and the center point, return the point at the
+     * center of the specified row and column
+     *
+     * @param nX number of pixels in the horizontal direction
+     * @param nY number of rows
+     * @param j the column index of the pixel
+     * @param i the row index
+     * @param pc the center of the screen
+     * @return The center point of the pixel at (i,j)
+     */
     private Point getCenterPoint(int nX, int nY, int j, int i, Point pc) {
         Point pij = pc;
         double ry = alignZero(this.height/ nY);
